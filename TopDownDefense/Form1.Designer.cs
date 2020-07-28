@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Canvas = new System.Windows.Forms.Panel();
+            this.updateTmr = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // Canvas
@@ -39,6 +41,12 @@
             this.Canvas.Size = new System.Drawing.Size(1160, 640);
             this.Canvas.TabIndex = 0;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
+            // 
+            // updateTmr
+            // 
+            this.updateTmr.Enabled = true;
+            this.updateTmr.Interval = 1;
+            this.updateTmr.Tick += new System.EventHandler(this.updateTmr_Tick);
             // 
             // Form1
             // 
@@ -51,6 +59,8 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Top Down";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.ResumeLayout(false);
 
         }
@@ -58,6 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Panel Canvas;
+        private System.Windows.Forms.Timer updateTmr;
     }
 }
 
