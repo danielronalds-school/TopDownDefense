@@ -29,7 +29,7 @@ namespace TopDownDefense
         }
 
         public void DrawPlayer(Graphics g)
-        {
+        { 
             playerRec.Location = new Point(x, y);
             g.DrawImage(playerImage, playerRec);
         }
