@@ -34,13 +34,13 @@ namespace TopDownDefense
             g.DrawImage(playerImage, playerRec);
         }
 
-        public int spriteCentreX()
+        public int spriteCentre(string Axis)
         {
+            if(Axis == "y")
+            {
+                return y + (height / 2);
+            }
             return x + (width / 2);
-        }
-        public int spriteCentreY()
-        {
-            return y + (height / 2);
         }
 
         public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)

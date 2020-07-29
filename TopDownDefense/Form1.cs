@@ -91,22 +91,41 @@ namespace TopDownDefense
             }
         }
 
-        public int CalculateMouseAngle()
+        public double CalculateMouseAngle()
         {
-            double Opposite = Canvas.Width - (/*c*/Canvas.Width - (/*a*/Canvas.Width - MouseX)) - (/*d*/Canvas.Width - (/*b*/Canvas.Width - player.spriteCentreX()));
-            double Adjacent = Canvas.Height - (/*c*/Canvas.Height - (/*a*/Canvas.Height - MouseY)) - (/*d*/Canvas.Height - (/*b*/Canvas.Height - player.spriteCentreY()));
+            double Opposite;
+            double Adjacent;
 
-            triangleX.Left = player.spriteCentreX();
-            triangleX.Top = player.spriteCentreY();
-            triangleX.Width = Convert.ToInt32(Adjacent);
+            double AngleRadians;
+            double AngleDegrees;
 
-            triangleY.Left = MouseX;
-            triangleY.Top = MouseY;
-            triangleY.Height = Convert.ToInt32(Opposite);
+            // Working out the Opposite Size
+            int OppositeA = Canvas.Height-MouseY;
+            int OppositeB = Canvas.Height - player.spriteCentre("y");
 
-            Console.WriteLine("Adjacent Length = " + Adjacent + " Opposite Length = " + Opposite);
+            int OppositeC = Canvas.Height - OppositeA;
+            int OppositeD = Canvas.Height - OppositeB;
 
-            return Convert.ToInt32(100 * (Math.Atan(Opposite/Adjacent) - 1));
+            Opposite = Canvas.Height - OppositeC - OppositeD;
+
+            // Working out the Adjacent Size
+            int AdjacentA = Canvas.Width - MouseX;
+            int AdjacentB = Canvas.Width - player.spriteCentre("x");
+
+            int AdjacentC = Canvas.Width - AdjacentA;
+            int AdjacentD = Canvas.Width - AdjacentB;
+
+            Adjacent = Canvas.Height - AdjacentC - AdjacentD;
+
+            AngleRadians = Math.Atan2(Opposite, Adjacent);
+            AngleDegrees = AngleRadians * (180 / Math.PI);
+
+            if(AngleDegrees < 0)
+            {
+                AngleDegrees = (AngleDegrees * -1) + 180;
+            }
+
+            return AngleDegrees;
         }
 
     }

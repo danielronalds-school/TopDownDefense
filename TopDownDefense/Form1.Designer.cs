@@ -31,18 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.Canvas = new System.Windows.Forms.Panel();
             this.updateTmr = new System.Windows.Forms.Timer(this.components);
-            this.triangleX = new System.Windows.Forms.PictureBox();
-            this.triangleY = new System.Windows.Forms.PictureBox();
-            this.Canvas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.triangleX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triangleY)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.Canvas.Controls.Add(this.triangleY);
-            this.Canvas.Controls.Add(this.triangleX);
             this.Canvas.Location = new System.Drawing.Point(10, 10);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(1160, 640);
@@ -55,24 +48,6 @@
             this.updateTmr.Enabled = true;
             this.updateTmr.Interval = 1;
             this.updateTmr.Tick += new System.EventHandler(this.updateTmr_Tick);
-            // 
-            // triangleX
-            // 
-            this.triangleX.BackColor = System.Drawing.Color.Red;
-            this.triangleX.Location = new System.Drawing.Point(825, 184);
-            this.triangleX.Name = "triangleX";
-            this.triangleX.Size = new System.Drawing.Size(100, 5);
-            this.triangleX.TabIndex = 0;
-            this.triangleX.TabStop = false;
-            // 
-            // triangleY
-            // 
-            this.triangleY.BackColor = System.Drawing.Color.Red;
-            this.triangleY.Location = new System.Drawing.Point(530, 318);
-            this.triangleY.Name = "triangleY";
-            this.triangleY.Size = new System.Drawing.Size(5, 100);
-            this.triangleY.TabIndex = 1;
-            this.triangleY.TabStop = false;
             // 
             // Form1
             // 
@@ -88,9 +63,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
-            this.Canvas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.triangleX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triangleY)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -99,8 +71,6 @@
 
         private System.Windows.Forms.Panel Canvas;
         private System.Windows.Forms.Timer updateTmr;
-        private System.Windows.Forms.PictureBox triangleY;
-        private System.Windows.Forms.PictureBox triangleX;
     }
 }
 
