@@ -120,10 +120,10 @@ namespace TopDownDefense
             AngleRadians = Math.Atan2(Opposite, Adjacent);
             AngleDegrees = AngleRadians * (180 / Math.PI);
 
-            if(AngleDegrees < 0)
+            /*if(AngleDegrees < 0)
             {
                 AngleDegrees = (AngleDegrees * -1) + 180;
-            }
+            }*/
 
             return AngleDegrees;
         }
