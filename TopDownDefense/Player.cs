@@ -18,7 +18,7 @@ namespace TopDownDefense
 
         public int PlayerSpeed = 3;
 
-        public Player(int position_x, int position_y, int scale)
+        public Player(int position_x, int position_y, int scale, int angle)
         {
             playerImage = Properties.Resources.TopDownCharacter;
             x = position_x;
@@ -29,9 +29,18 @@ namespace TopDownDefense
         }
 
         public void DrawPlayer(Graphics g)
-        { 
+        {   
             playerRec.Location = new Point(x, y);
             g.DrawImage(playerImage, playerRec);
+        }
+
+        public int spriteCentreX()
+        {
+            return x + (width / 2);
+        }
+        public int spriteCentreY()
+        {
+            return y + (height / 2);
         }
 
         public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)
