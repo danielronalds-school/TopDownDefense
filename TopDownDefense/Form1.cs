@@ -31,7 +31,7 @@ namespace TopDownDefense
         {
             g = e.Graphics;
             //Console.WriteLine(CalculateMouseAngle());
-            player.DrawPlayer(g);
+            player.DrawPlayer(g, CalculateMouseAngle());
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)

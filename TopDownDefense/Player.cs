@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace TopDownDefense
 {
@@ -18,6 +19,10 @@ namespace TopDownDefense
 
         public int PlayerSpeed = 3;
 
+        public Matrix matrix;
+
+        Point centre;
+
         public Player(int position_x, int position_y, int scale, int angle)
         {
             playerImage = Properties.Resources.TopDownCharacter;
@@ -28,8 +33,14 @@ namespace TopDownDefense
             playerRec = new Rectangle(x, y, width, height);
         }
 
-        public void DrawPlayer(Graphics g)
-        {   
+        public void DrawPlayer(Graphics g, Double rotationAngle)
+        {
+            centre = new Point(spriteCentre("y"), spriteCentre("x"));
+
+            matrix = new Matrix();
+
+            matrix.RotateAt((int)rotationAngle, centre);
+            g.Transform = matrix;
             playerRec.Location = new Point(x, y);
             g.DrawImage(playerImage, playerRec);
         }
