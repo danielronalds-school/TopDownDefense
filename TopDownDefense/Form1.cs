@@ -18,6 +18,8 @@ namespace TopDownDefense
         Player player = new Player(300,300,1,0);
         bool playerLeft, playerRight, playerUp, playerDown;
 
+        Point RotationPoint;
+
         int MouseX;
         int MouseY;
 
@@ -31,6 +33,7 @@ namespace TopDownDefense
         {
             g = e.Graphics;
             //Console.WriteLine(CalculateMouseAngle());
+            g.DrawRectangle(Pens.Green, new Rectangle(RotationPoint, new Size(7, 7)));
             player.DrawPlayer(g, CalculateMouseAngle());
         }
 
@@ -38,6 +41,7 @@ namespace TopDownDefense
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
             Console.WriteLine("Mouse X = " + MouseX + " Mouse Y = " + MouseY + " Angle = " + CalculateMouseAngle());
+
             Canvas.Invalidate();
         }
 
@@ -118,14 +122,17 @@ namespace TopDownDefense
             Adjacent = Canvas.Height - AdjacentC - AdjacentD;
 
             AngleRadians = Math.Atan2(Opposite, Adjacent);
-            AngleDegrees = AngleRadians * (180 / Math.PI);
+            AngleDegrees = (AngleRadians * (180 / Math.PI)) -180 ;
 
             /*if(AngleDegrees < 0)
             {
                 AngleDegrees = (AngleDegrees * -1) + 180;
             }*/
 
+            RotationPoint = new Point(player.spriteCentre("x"), player.spriteCentre("y"));
+
             return AngleDegrees;
+
         }
 
     }

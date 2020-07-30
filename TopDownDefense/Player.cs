@@ -35,13 +35,18 @@ namespace TopDownDefense
 
         public void DrawPlayer(Graphics g, Double rotationAngle)
         {
-            centre = new Point(spriteCentre("y"), spriteCentre("x"));
+            playerRec.Location = new Point(x, y);
+
+            centre = new Point((playerRec.X+(playerRec.Width/2)),(playerRec.Y+(playerRec.Height/2)));
 
             matrix = new Matrix();
 
-            matrix.RotateAt((int)rotationAngle, centre);
+
+            matrix.RotateAt((int)rotationAngle, playerRec.Location);
+            g.DrawEllipse(Pens.Red, new Rectangle(playerRec.Location, new Size(7, 7)));
             g.Transform = matrix;
-            playerRec.Location = new Point(x, y);
+            /*g.TranslateTransform(playerRec.X, playerRec.Y);
+            g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
         }
 
@@ -49,9 +54,9 @@ namespace TopDownDefense
         {
             if(Axis == "y")
             {
-                return y + (height / 2);
+                return playerRec.Y;
             }
-            return x + (width / 2);
+            return playerRec.X;
         }
 
         public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)
