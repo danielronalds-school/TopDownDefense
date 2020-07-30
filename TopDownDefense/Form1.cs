@@ -20,8 +20,6 @@ namespace TopDownDefense
 
         Point mouse;
 
-        List<Projectile> projectiles = new List<Projectile>();
-
         public Form1()
         {
             InitializeComponent();
@@ -31,8 +29,8 @@ namespace TopDownDefense
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            player.DrawPlayer(g, mouse);
-            foreach (Projectile p in projectiles)
+            player.DrawPlayer(g, mouse, playerFire);
+            foreach (Projectile p in player.projectiles)
             {
                 p.drawProjectile(g);
                 p.moveProjectile(g);
@@ -43,10 +41,6 @@ namespace TopDownDefense
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
             Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + player.CalculeAngle(player.rifleBarrel(), mouse));
-            if(playerFire)
-            {
-                playerShoot();
-            }
             Canvas.Invalidate();
         }
 
@@ -63,11 +57,6 @@ namespace TopDownDefense
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             playerFire = false;
-        }
-
-        private void playerShoot()
-        {
-            projectiles.Add(new Projectile(player.rifleBarrel(), (int)player.CalculeAngle(player.rifleBarrel(), mouse)));
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

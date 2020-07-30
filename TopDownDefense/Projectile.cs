@@ -12,7 +12,7 @@ namespace TopDownDefense
     {
         private int x, y, width, height;
         private int projectileRotated;
-        private int projectileSpeed = 20;
+        private int projectileSpeed = 40;
 
         private double xSpeed, ySpeed;
 
@@ -27,11 +27,13 @@ namespace TopDownDefense
         {
             width = 42;
             height = 6;
+            x = 20000;
+            y = 20000;
             projectileImage = Properties.Resources.bullet;
             projectileRec = new Rectangle(x, y, width, height);
 
-            xSpeed = projectileSpeed * (Math.Cos((projectileAngle + 90) * Math.PI / 180));
-            ySpeed = projectileSpeed * (Math.Sin((projectileAngle - 90) * Math.PI / 180));
+            xSpeed = projectileSpeed * (Math.Cos((projectileAngle - 0) * Math.PI / 180));
+            ySpeed = projectileSpeed * (Math.Sin((projectileAngle + 0) * Math.PI / 180));
 
             x = rifleBarrel.X;
             y = rifleBarrel.Y;
