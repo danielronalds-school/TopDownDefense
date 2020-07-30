@@ -11,17 +11,15 @@ namespace TopDownDefense
     class Player
     {
 
-        public int x, y, width, height;
+        private int x, y, width, height;
 
-        public Image playerImage;
+        private Image playerImage;
 
         public Rectangle playerRec;
 
-        public int PlayerSpeed = 3;
+        private int PlayerSpeed = 3;
 
-        public Matrix matrix;
-
-        Point centre;
+        private Matrix matrix;
 
         public Player(int position_x, int position_y, int scale, int angle)
         {
@@ -33,30 +31,38 @@ namespace TopDownDefense
             playerRec = new Rectangle(x, y, width, height);
         }
 
-        public void DrawPlayer(Graphics g, Double rotationAngle)
+        public void DrawPlayer(Graphics g, Point Mouse)
         {
             playerRec.Location = new Point(x, y);
 
-            centre = new Point((playerRec.X+(playerRec.Width/2)),(playerRec.Y+(playerRec.Height/2)));
-
             matrix = new Matrix();
 
-
-            matrix.RotateAt((int)rotationAngle, playerRec.Location);
-            g.DrawEllipse(Pens.Red, new Rectangle(playerRec.Location, new Size(7, 7)));
+            matrix.RotateAt((int)CalculeAngle(playerRec.Location,Mouse), spriteCentre());
+            g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(7, 7)));
             g.Transform = matrix;
             /*g.TranslateTransform(playerRec.X, playerRec.Y);
             g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
         }
 
-        public int spriteCentre(string Axis)
+        public Point spriteCentre()
         {
-            if(Axis == "y")
-            {
-                return playerRec.Y;
-            }
-            return playerRec.X;
+            Point SpriteCentre;
+            int SpriteCentreX = playerRec.Location.X + (width / 3);
+            int SpriteCentreY = playerRec.Location.Y + (height / 2);
+            SpriteCentre = new Point(SpriteCentreX, SpriteCentreY);
+            return SpriteCentre;
+        }
+
+        public double CalculeAngle(Point start, Point arrival)
+        {
+            //var deltaX = Math.Pow((arrival.X - start.X), 2);
+            //var deltaY = Math.Pow((arrival.Y - start.Y), 2);
+
+            var radian = Math.Atan2((arrival.Y - start.Y), (arrival.X - start.X));
+            var angle = (radian * (180 / Math.PI) + 360) % 360;
+
+            return angle;
         }
 
         public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)

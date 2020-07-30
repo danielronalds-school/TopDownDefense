@@ -18,10 +18,12 @@ namespace TopDownDefense
         Player player = new Player(300,300,1,0);
         bool playerLeft, playerRight, playerUp, playerDown;
 
-        Point RotationPoint;
+        Point playerCentre;
 
         int MouseX;
         int MouseY;
+
+        Point mouse;
 
         public Form1()
         {
@@ -33,14 +35,14 @@ namespace TopDownDefense
         {
             g = e.Graphics;
             //Console.WriteLine(CalculateMouseAngle());
-            g.DrawRectangle(Pens.Green, new Rectangle(RotationPoint, new Size(7, 7)));
-            player.DrawPlayer(g, CalculateMouseAngle());
+            g.DrawRectangle(Pens.Green, new Rectangle(playerCentre, new Size(7, 7)));
+            player.DrawPlayer(g, mouse);
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
-            Console.WriteLine("Mouse X = " + MouseX + " Mouse Y = " + MouseY + " Angle = " + CalculateMouseAngle());
+            Console.WriteLine("Mouse X = " + MouseX + " Mouse Y = " + MouseY + " Angle = " + player.CalculeAngle(player.spriteCentre(), mouse));
 
             Canvas.Invalidate();
         }
@@ -49,6 +51,7 @@ namespace TopDownDefense
         {
             MouseX = e.X;
             MouseY = e.Y;
+            mouse = this.PointToClient(Cursor.Position);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -95,7 +98,7 @@ namespace TopDownDefense
             }
         }
 
-        public double CalculateMouseAngle()
+        /*public double CalculateMouseAngle()
         {
             double Opposite;
             double Adjacent;
@@ -127,13 +130,13 @@ namespace TopDownDefense
             /*if(AngleDegrees < 0)
             {
                 AngleDegrees = (AngleDegrees * -1) + 180;
-            }*/
+            }
 
-            RotationPoint = new Point(player.spriteCentre("x"), player.spriteCentre("y"));
+            //RotationPoint = new Point(player.spriteCentre("x"), player.spriteCentre("y"));
 
             return AngleDegrees;
 
-        }
+        }*/
 
     }
 }
