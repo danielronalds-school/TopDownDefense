@@ -41,7 +41,9 @@
             this.Canvas.Size = new System.Drawing.Size(1160, 640);
             this.Canvas.TabIndex = 0;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
+            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
             // updateTmr
             // 
@@ -62,7 +64,9 @@
             this.Text = "Top Down";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.ResumeLayout(false);
 
         }

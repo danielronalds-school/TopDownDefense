@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -83,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TopDownCharacter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

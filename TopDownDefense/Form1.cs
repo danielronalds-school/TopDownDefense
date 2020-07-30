@@ -16,12 +16,11 @@ namespace TopDownDefense
         Graphics g;
 
         Player player = new Player(300,300,1,0);
-        bool playerLeft, playerRight, playerUp, playerDown;
-
-        int MouseX;
-        int MouseY;
+        bool playerLeft, playerRight, playerUp, playerDown, playerFire;
 
         Point mouse;
+
+        List<Projectile> projectiles = new List<Projectile>();
 
         public Form1()
         {
@@ -32,23 +31,43 @@ namespace TopDownDefense
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            //Console.WriteLine(CalculateMouseAngle());
             player.DrawPlayer(g, mouse);
+            foreach (Projectile p in projectiles)
+            {
+                p.drawProjectile(g);
+                p.moveProjectile(g);
+            }
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
-            Console.WriteLine("Mouse X = " + MouseX + " Mouse Y = " + MouseY + " Angle = " + player.CalculeAngle(player.spriteCentre(), mouse));
-
+            Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + player.CalculeAngle(player.rifleBarrel(), mouse));
+            if(playerFire)
+            {
+                playerShoot();
+            }
             Canvas.Invalidate();
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
-            MouseX = e.X;
-            MouseY = e.Y;
             mouse = this.PointToClient(Cursor.Position);
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            playerFire = true;
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            playerFire = false;
+        }
+
+        private void playerShoot()
+        {
+            projectiles.Add(new Projectile(player.rifleBarrel(), (int)player.CalculeAngle(player.rifleBarrel(), mouse)));
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -94,46 +113,6 @@ namespace TopDownDefense
                     break;
             }
         }
-
-        /*public double CalculateMouseAngle()
-        {
-            double Opposite;
-            double Adjacent;
-
-            double AngleRadians;
-            double AngleDegrees;
-
-            // Working out the Opposite Size
-            int OppositeA = Canvas.Height-MouseY;
-            int OppositeB = Canvas.Height - player.spriteCentre("y");
-
-            int OppositeC = Canvas.Height - OppositeA;
-            int OppositeD = Canvas.Height - OppositeB;
-
-            Opposite = Canvas.Height - OppositeC - OppositeD;
-
-            // Working out the Adjacent Size
-            int AdjacentA = Canvas.Width - MouseX;
-            int AdjacentB = Canvas.Width - player.spriteCentre("x");
-
-            int AdjacentC = Canvas.Width - AdjacentA;
-            int AdjacentD = Canvas.Width - AdjacentB;
-
-            Adjacent = Canvas.Height - AdjacentC - AdjacentD;
-
-            AngleRadians = Math.Atan2(Opposite, Adjacent);
-            AngleDegrees = (AngleRadians * (180 / Math.PI)) -180 ;
-
-            /*if(AngleDegrees < 0)
-            {
-                AngleDegrees = (AngleDegrees * -1) + 180;
-            }
-
-            //RotationPoint = new Point(player.spriteCentre("x"), player.spriteCentre("y"));
-
-            return AngleDegrees;
-
-        }*/
 
     }
 }
