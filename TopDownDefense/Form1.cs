@@ -18,8 +18,6 @@ namespace TopDownDefense
         Player player = new Player(300,300,1,0);
         bool playerLeft, playerRight, playerUp, playerDown;
 
-        Point playerCentre;
-
         int MouseX;
         int MouseY;
 
@@ -35,7 +33,6 @@ namespace TopDownDefense
         {
             g = e.Graphics;
             //Console.WriteLine(CalculateMouseAngle());
-            g.DrawRectangle(Pens.Green, new Rectangle(playerCentre, new Size(7, 7)));
             player.DrawPlayer(g, mouse);
         }
 

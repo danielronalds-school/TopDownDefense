@@ -37,12 +37,13 @@ namespace TopDownDefense
 
             matrix = new Matrix();
 
-            matrix.RotateAt((int)CalculeAngle(playerRec.Location,Mouse), spriteCentre());
-            g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(7, 7)));
+            matrix.RotateAt((int)CalculeAngle(rifleBarrel(),Mouse), spriteCentre());
             g.Transform = matrix;
             /*g.TranslateTransform(playerRec.X, playerRec.Y);
             g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
+            g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(9, 9))); // Sprite Centre Visulisation
+            g.DrawEllipse(Pens.Green, new Rectangle(rifleBarrel(), new Size(9, 9)));// Rifle Visulisation
         }
 
         public Point spriteCentre()
@@ -54,11 +55,17 @@ namespace TopDownDefense
             return SpriteCentre;
         }
 
+        public Point rifleBarrel()
+        {
+            Point rifleBarrel;
+            int rifleBarrelX = playerRec.Location.X + ((width/4)*3) + 10;
+            int rifleBarrelY = playerRec.Location.Y + (height / 2) + 11;
+            rifleBarrel = new Point(rifleBarrelX,rifleBarrelY);
+            return rifleBarrel;
+        }
+
         public double CalculeAngle(Point start, Point arrival)
         {
-            //var deltaX = Math.Pow((arrival.X - start.X), 2);
-            //var deltaY = Math.Pow((arrival.Y - start.Y), 2);
-
             var radian = Math.Atan2((arrival.Y - start.Y), (arrival.X - start.X));
             var angle = (radian * (180 / Math.PI) + 360) % 360;
 
