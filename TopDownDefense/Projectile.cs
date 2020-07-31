@@ -23,7 +23,7 @@ namespace TopDownDefense
 
         Point projectileCentre;
 
-        public Projectile(Point rifleBarrel, int projectileAngle)
+        public Projectile(Rectangle rifleBarrel, int projectileAngle)
         {
             width = 42;
             height = 6;
@@ -32,11 +32,11 @@ namespace TopDownDefense
             projectileImage = Properties.Resources.bullet;
             projectileRec = new Rectangle(x, y, width, height);
 
-            xSpeed = projectileSpeed * (Math.Cos((projectileAngle - 0) * Math.PI / 180));
-            ySpeed = projectileSpeed * (Math.Sin((projectileAngle + 0) * Math.PI / 180));
+            xSpeed = projectileSpeed * (Math.Cos((projectileAngle) * Math.PI / 180));
+            ySpeed = projectileSpeed * (Math.Sin((projectileAngle) * Math.PI / 180));
 
-            x = rifleBarrel.X;
-            y = rifleBarrel.Y;
+            x = rifleBarrel.X + rifleBarrel.Width / 2;
+            y = rifleBarrel.Y + rifleBarrel.Height / 2;
 
             projectileRotated = projectileAngle;
         }
@@ -54,7 +54,7 @@ namespace TopDownDefense
         public void moveProjectile(Graphics g)
         {
             x += (int)xSpeed;
-            y -= (int)ySpeed;
+            y += (int)ySpeed;
             projectileRec.Location = new Point(x, y);
         }
     }

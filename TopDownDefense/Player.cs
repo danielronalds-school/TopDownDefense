@@ -17,6 +17,8 @@ namespace TopDownDefense
 
         public Rectangle playerRec;
 
+        public Rectangle barrelRec;
+
         private int PlayerSpeed = 3;
 
         private int fireDelay;
@@ -35,11 +37,14 @@ namespace TopDownDefense
             width = 135 * scale;
             height = 80 * scale;
             playerRec = new Rectangle(x, y, width, height);
+
+            barrelRec = new Rectangle(rifleBarrel(), new Size(9, 9));
         }
 
         public void DrawPlayer(Graphics g, Point Mouse, bool playerFire)
         {
             playerRec.Location = new Point(x, y);
+            barrelRec.Location = rifleBarrel();
 
             matrix = new Matrix();
 
@@ -49,12 +54,12 @@ namespace TopDownDefense
             g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
             g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(9, 9))); // Sprite Centre Visulisation
-            g.DrawEllipse(Pens.Green, new Rectangle(rifleBarrel(), new Size(9, 9)));// Rifle Visulisation
+            g.DrawEllipse(Pens.Green, barrelRec);// Rifle Visulisation
 
             if(playerFire && fireDelay >= maxFireDelay)
             {
                 fireDelay = 0;
-                projectiles.Add(new Projectile(rifleBarrel(), (int)CalculeAngle(rifleBarrel(), Mouse)));
+                projectiles.Add(new Projectile(barrelRec, (int)CalculeAngle(rifleBarrel(), Mouse)));
             }
             else if(fireDelay < maxFireDelay)
             {
