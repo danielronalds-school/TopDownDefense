@@ -25,7 +25,7 @@ namespace TopDownDefense
 
         public Projectile(Rectangle rifleBarrel, int projectileAngle)
         {
-            width = 42;
+            width = 62;
             height = 6;
             x = 20000;
             y = 20000;

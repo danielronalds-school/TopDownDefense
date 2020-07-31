@@ -10,6 +10,7 @@ namespace TopDownDefense
 {
     class Player
     {
+        Random random = new Random();
 
         private int x, y, width, height;
 
@@ -17,13 +18,15 @@ namespace TopDownDefense
 
         public Rectangle playerRec;
 
-        public Rectangle barrelRec;
+        private Rectangle barrelRec;
 
-        private int PlayerSpeed = 3;
+        public int PlayerSpeed = 3;
 
         private int fireDelay;
 
-        private int maxFireDelay = 5;
+        private int maxFireDelay = 6;
+
+        public int bulletSpray = 3;
 
         private Matrix matrix;
 
@@ -43,23 +46,39 @@ namespace TopDownDefense
 
         public void DrawPlayer(Graphics g, Point Mouse, bool playerFire)
         {
+            int rotationAngle;
+
             playerRec.Location = new Point(x, y);
             barrelRec.Location = rifleBarrel();
 
             matrix = new Matrix();
 
-            matrix.RotateAt((int)CalculeAngle(rifleBarrel(),Mouse), spriteCentre());
+            rotationAngle = (int)CalculeAngle(rifleBarrel(), Mouse);
+
+            if(playerFire)
+            {
+                if (random.Next(1, 10) < 6)
+                {
+                    rotationAngle -= bulletSpray;
+                }
+                else
+                {
+                    rotationAngle += bulletSpray;
+                }
+            }
+
+            matrix.RotateAt(rotationAngle, spriteCentre());
             g.Transform = matrix;
             /*g.TranslateTransform(playerRec.X, playerRec.Y);
             g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
             g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(9, 9))); // Sprite Centre Visulisation
-            g.DrawEllipse(Pens.Green, barrelRec);// Rifle Visulisation
+            //g.DrawEllipse(Pens.Green, barrelRec);// Rifle Visulisation
 
             if(playerFire && fireDelay >= maxFireDelay)
             {
                 fireDelay = 0;
-                projectiles.Add(new Projectile(barrelRec, (int)CalculeAngle(rifleBarrel(), Mouse)));
+                projectiles.Add(new Projectile(playerRec, rotationAngle));
             }
             else if(fireDelay < maxFireDelay)
             {

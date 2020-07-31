@@ -51,12 +51,30 @@ namespace TopDownDefense
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            playerFire = true;
+            switch(e.Button)
+            {
+                case MouseButtons.Left:
+                    playerFire = true;
+                    break;
+                case MouseButtons.Right:
+                    player.bulletSpray = player.bulletSpray / 2;
+                    player.PlayerSpeed = 1;
+                    break;
+            }
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            playerFire = false;
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    playerFire = false;
+                    break;
+                case MouseButtons.Right:
+                    player.bulletSpray = player.bulletSpray * 2;
+                    player.PlayerSpeed = 2;
+                    break;
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
