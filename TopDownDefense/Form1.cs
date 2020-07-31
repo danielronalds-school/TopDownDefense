@@ -15,6 +15,8 @@ namespace TopDownDefense
     {
         Graphics g;
 
+        Crystal crystal = new Crystal();
+
         Player player = new Player(300,300,1,0);
         bool playerLeft, playerRight, playerUp, playerDown, playerFire;
 
@@ -29,6 +31,7 @@ namespace TopDownDefense
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
+            crystal.DrawCrystal(g);
             player.DrawPlayer(g, mouse, playerFire);
             foreach (Projectile p in player.projectiles)
             {
@@ -56,10 +59,6 @@ namespace TopDownDefense
                 case MouseButtons.Left:
                     playerFire = true;
                     break;
-                case MouseButtons.Right:
-                    player.bulletSpray = player.bulletSpray / 2;
-                    player.PlayerSpeed = 1;
-                    break;
             }
         }
 
@@ -69,10 +68,6 @@ namespace TopDownDefense
             {
                 case MouseButtons.Left:
                     playerFire = false;
-                    break;
-                case MouseButtons.Right:
-                    player.bulletSpray = player.bulletSpray * 2;
-                    player.PlayerSpeed = 2;
                     break;
             }
         }
