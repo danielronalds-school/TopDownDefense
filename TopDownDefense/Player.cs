@@ -30,6 +30,8 @@ namespace TopDownDefense
 
         public int bulletSpray = 3;
 
+        public int bulletDamage = 6;
+
         private Matrix matrix;
 
         public List<Projectile> projectiles = new List<Projectile>();

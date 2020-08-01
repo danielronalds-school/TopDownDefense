@@ -12,6 +12,8 @@ namespace TopDownDefense
     {
         Angles angle = new Angles();
 
+        Random random = new Random();
+
         private int x, y, width, height;
         private Image enemyImage;
         
@@ -25,6 +27,9 @@ namespace TopDownDefense
         string currentObjective = "Player";
 
         public int health = 30;
+
+        public bool enemyHit = false;
+        int hitShake = 15;
 
         int objectiveAngle;
 
@@ -44,6 +49,20 @@ namespace TopDownDefense
         public void DrawEnemy(Graphics g)
         {
             enemyMatrix = new Matrix();
+
+            if(enemyHit)
+            {
+                if (random.Next(1, 10) < 6)
+                {
+                    objectiveAngle -= hitShake;
+                }
+                else
+                {
+                    objectiveAngle += hitShake;
+                }
+
+                enemyHit = false;
+            }
 
             enemyMatrix.RotateAt(objectiveAngle, enemyCentre());
             g.Transform = enemyMatrix;

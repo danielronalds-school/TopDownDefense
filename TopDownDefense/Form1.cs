@@ -75,15 +75,23 @@ namespace TopDownDefense
 
         private void checkCollisions()
         {
-            foreach (Projectile p in player.projectiles)
+            for (int i = 0; i < player.projectiles.Count(); i++)
             {
-                foreach (Enemy enemy in enemies)
+                for (int x = 0; x < enemies.Count(); x++)
                 {
-                    if (p.projectileRec.IntersectsWith(enemy.enemyRec))
+                    if(enemies[x].enemyRec.IntersectsWith(player.projectiles[i].projectileRec))
                     {
+                        player.projectiles.Remove(player.projectiles[i]);
+
+                        enemies[x].health -= player.bulletDamage;
+                        enemies[x].enemyHit = true;
                         Console.WriteLine("HIT!!!");
-                        player.projectiles.Remove(p);
-                        enemies.Remove(enemy);
+
+                        if (enemies[x].health <= 0)
+                        {
+                            enemies.Remove(enemies[x]);
+                        }
+                        break;
                     }
                 }
             }
