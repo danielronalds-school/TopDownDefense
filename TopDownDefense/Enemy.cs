@@ -24,6 +24,8 @@ namespace TopDownDefense
 
         string currentObjective = "Player";
 
+        public int health = 30;
+
         int objectiveAngle;
 
         public Enemy(int position_x, int position_y, string objective)

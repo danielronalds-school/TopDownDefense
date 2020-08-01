@@ -49,6 +49,9 @@ namespace TopDownDefense
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
+
+            checkCollisions();
+
             crystal.DrawCrystal(g);
             player.DrawPlayer(g, mouse, playerFire);
             foreach (Projectile p in player.projectiles)
@@ -68,6 +71,22 @@ namespace TopDownDefense
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
             Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
             Canvas.Invalidate();
+        }
+
+        private void checkCollisions()
+        {
+            foreach (Projectile p in player.projectiles)
+            {
+                foreach (Enemy enemy in enemies)
+                {
+                    if (p.projectileRec.IntersectsWith(enemy.enemyRec))
+                    {
+                        Console.WriteLine("HIT!!!");
+                        player.projectiles.Remove(p);
+                        enemies.Remove(enemy);
+                    }
+                }
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
