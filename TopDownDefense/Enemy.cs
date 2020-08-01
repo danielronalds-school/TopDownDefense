@@ -8,8 +8,10 @@ using System.Drawing.Drawing2D;
 
 namespace TopDownDefense
 {
-    class Enemy
+    public class Enemy
     {
+        Angles angle = new Angles();
+
         private int x, y, width, height;
         private Image enemyImage;
         
@@ -24,15 +26,17 @@ namespace TopDownDefense
 
         int objectiveAngle;
 
-        public Enemy(int position_x, int position_y)
+        public Enemy(int position_x, int position_y, string objective)
         {
-            width = 42;
+            width = 44;
             height = width;
             x = position_x;
             y = position_y;
             enemyImage = Properties.Resources.Drone;
 
             enemyRec = new Rectangle(x,y,width,height);
+
+            currentObjective = objective;
         }
 
         public void DrawEnemy(Graphics g)
@@ -58,7 +62,7 @@ namespace TopDownDefense
                 objectivePoint = new Point((Player.X + (Player.Width / 2)), (Player.Y + (Player.Height / 2)));
             }
 
-            objectiveAngle = (int)CalculateAngle(enemyCentre(), objectivePoint);
+            objectiveAngle = (int)angle.CalculateAngle(enemyCentre(), objectivePoint);
 
             xSpeed = enemySpeed * (Math.Cos((objectiveAngle) * Math.PI / 180));
             ySpeed = enemySpeed * (Math.Sin((objectiveAngle) * Math.PI / 180));
@@ -78,14 +82,6 @@ namespace TopDownDefense
             enemyCentre = new Point(x, y);
 
             return enemyCentre;
-        }
-
-        public double CalculateAngle(Point start, Point arrival)
-        {
-            var radian = Math.Atan2((arrival.Y - start.Y), (arrival.X - start.X));
-            var angle = (radian * (180 / Math.PI) + 360) % 360;
-
-            return angle;
         }
     }
 }

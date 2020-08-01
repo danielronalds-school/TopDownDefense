@@ -10,6 +10,8 @@ namespace TopDownDefense
 {
     class Player
     {
+        Angles angle = new Angles();
+
         Random random = new Random();
 
         private int x, y, width, height;
@@ -53,7 +55,7 @@ namespace TopDownDefense
 
             matrix = new Matrix();
 
-            rotationAngle = (int)CalculateAngle(rifleBarrel(), Mouse);
+            rotationAngle = (int)angle.CalculateAngle(rifleBarrel(), Mouse);
 
             if(playerFire)
             {
@@ -102,14 +104,6 @@ namespace TopDownDefense
             int rifleBarrelY = playerRec.Location.Y + (height / 2) + 11;
             rifleBarrel = new Point(rifleBarrelX,rifleBarrelY);
             return rifleBarrel;
-        }
-
-        public double CalculateAngle(Point start, Point arrival)
-        {
-            var radian = Math.Atan2((arrival.Y - start.Y), (arrival.X - start.X));
-            var angle = (radian * (180 / Math.PI) + 360) % 360;
-
-            return angle;
         }
 
         public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)
