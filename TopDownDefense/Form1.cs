@@ -17,6 +17,8 @@ namespace TopDownDefense
 
         Crystal crystal = new Crystal();
 
+        Enemy enemy = new Enemy(100,100);
+
         Player player = new Player(300,300,1,0);
         bool playerLeft, playerRight, playerUp, playerDown, playerFire;
 
@@ -38,12 +40,14 @@ namespace TopDownDefense
                 p.drawProjectile(g);
                 p.moveProjectile(g);
             }
+            enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
+            enemy.DrawEnemy(g);
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
-            Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + player.CalculeAngle(player.rifleBarrel(), mouse));
+            Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + player.CalculateAngle(player.rifleBarrel(), mouse));
             Canvas.Invalidate();
         }
 

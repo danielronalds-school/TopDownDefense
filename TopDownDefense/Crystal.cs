@@ -33,5 +33,17 @@ namespace TopDownDefense
         {
             g.DrawImage(crystalImage, crystalRec);
         }
+
+        public Point crystalCentre()
+        {
+            Point crystalCentre;
+
+            int x = crystalRec.X + width;
+            int y = crystalRec.Y + width;
+
+            crystalCentre = new Point(x, y);
+
+            return crystalCentre;
+        }
     }
 }

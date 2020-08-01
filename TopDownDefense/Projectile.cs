@@ -35,8 +35,8 @@ namespace TopDownDefense
             xSpeed = projectileSpeed * (Math.Cos((projectileAngle) * Math.PI / 180));
             ySpeed = projectileSpeed * (Math.Sin((projectileAngle) * Math.PI / 180));
 
-            x = rifleBarrel.X;// + rifleBarrel.Width / 2;
-            y = rifleBarrel.Y;// + rifleBarrel.Height / 2;
+            x = rifleBarrel.X + (rifleBarrel.Width / 2);
+            y = rifleBarrel.Y + (rifleBarrel.Height / 2);
 
             projectileRotated = projectileAngle;
         }
