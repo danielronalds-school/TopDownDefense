@@ -32,6 +32,10 @@ namespace TopDownDefense
 
         public int bulletDamage = 6;
 
+        public int Ammo;
+
+        public int MaxAmmo = 100;
+
         private Matrix matrix;
 
         public List<Projectile> projectiles = new List<Projectile>();
@@ -44,6 +48,8 @@ namespace TopDownDefense
             width = 135 * scale;
             height = 80 * scale;
             playerRec = new Rectangle(x, y, width, height);
+
+            Ammo = MaxAmmo;
 
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));
         }
@@ -59,7 +65,7 @@ namespace TopDownDefense
 
             rotationAngle = (int)angle.CalculateAngle(rifleBarrel(), Mouse);
 
-            if(playerFire)
+            if(playerFire && Ammo > 0)
             {
                 if (random.Next(1, 10) < 6)
                 {
@@ -76,10 +82,11 @@ namespace TopDownDefense
             g.DrawImage(playerImage, playerRec);
             g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(9, 9))); // Sprite Centre Visulisation
             g.DrawEllipse(Pens.Green, barrelRec);
-            if(playerFire && fireDelay >= maxFireDelay)
+            if(playerFire && fireDelay >= maxFireDelay && Ammo > 0)
             {
                 fireDelay = 0;
                 projectiles.Add(new Projectile(playerRec, rotationAngle));
+                Ammo--;
             }
             else if(fireDelay < maxFireDelay)
             {
