@@ -21,24 +21,24 @@ namespace TopDownDefense
 
         private Matrix enemyMatrix;
 
-        private int enemySpeed = 3;
+        private int enemySpeed = 2;
         private double xSpeed, ySpeed;
 
         string currentObjective = "Player";
 
-        public int health = 30;
+        public int health = 15;
 
         public bool enemyHit = false;
         int hitShake = 15;
 
         int objectiveAngle;
 
-        public Enemy(int position_x, int position_y, string objective)
+        public Enemy(Point position, string objective)
         {
             width = 44;
             height = width;
-            x = position_x;
-            y = position_y;
+            x = position.X;
+            y = position.Y;
             enemyImage = Properties.Resources.Drone;
 
             enemyRec = new Rectangle(x,y,width,height);

@@ -73,11 +73,8 @@ namespace TopDownDefense
 
             matrix.RotateAt(rotationAngle, spriteCentre());
             g.Transform = matrix;
-            /*g.TranslateTransform(playerRec.X, playerRec.Y);
-            g.RotateTransform((int)rotationAngle);*/
             g.DrawImage(playerImage, playerRec);
             g.DrawEllipse(Pens.Red, new Rectangle(spriteCentre(), new Size(9, 9))); // Sprite Centre Visulisation
-            //g.DrawEllipse(Pens.Green, barrelRec);// Rifle Visulisation
             g.DrawEllipse(Pens.Green, barrelRec);
             if(playerFire && fireDelay >= maxFireDelay)
             {

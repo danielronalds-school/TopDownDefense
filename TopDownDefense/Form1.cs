@@ -15,11 +15,19 @@ namespace TopDownDefense
     {
         Graphics g;
 
+        Random random = new Random();
+
         Angles angle = new Angles();
 
         Crystal crystal = new Crystal();
 
-        //Enemy enemy = new Enemy(100,100);
+        // Spawn Points
+        Point TopLeftCorner;
+        Point TopRightCorner;
+        Point BottomLeftCorner;
+        Point BottomRightCorner;
+
+        int MaxEnemies = 8;
 
         public List<Enemy> enemies = new List<Enemy>();
 
@@ -33,18 +41,18 @@ namespace TopDownDefense
         {
             InitializeComponent();
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, Canvas, new object[] { true });
-            for (int i = 0; i < 3; i++)
-            {
-                if (i < 2)
-                {
-                    enemies.Add(new Enemy(i * 200, i * 200, "Crystal"));
-                }
-                else
-                {
-                    enemies.Add(new Enemy(i * 200, i * 200, "Player"));
-                }
-            }
+
+            ConfigureSpawnPoints();
         }
+
+        private void ConfigureSpawnPoints()
+        {
+            TopLeftCorner = new Point(0 - 50, 0 - 50);
+            TopRightCorner = new Point(Canvas.Width + 50, 0 - 50);
+            BottomLeftCorner = new Point(0 - 50, Canvas.Height + 50);
+            BottomRightCorner = new Point(Canvas.Width + 50, Canvas.Height + 50 );
+        }
+
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
@@ -59,6 +67,49 @@ namespace TopDownDefense
                 p.drawProjectile(g);
                 p.moveProjectile(g);
             }
+
+            if (enemies.Count() < MaxEnemies)
+            {
+                Point EnemySpawnPoint;
+                String EnemyObjective;
+
+                int RandomSpawnSelection = random.Next(1,4);
+
+                if(random.Next(1, 100) <= 50)
+                {
+                    EnemyObjective = "Crystal";
+                }
+                else
+                {
+                    EnemyObjective = "Player";
+                }
+
+                switch(RandomSpawnSelection)
+                {
+                    case 1:
+                        EnemySpawnPoint = TopLeftCorner;
+                        break;
+
+                    case 2:
+                        EnemySpawnPoint = TopRightCorner;
+                        break;
+
+                    case 3:
+                        EnemySpawnPoint = BottomLeftCorner;
+                        break;
+
+                    case 4:
+                        EnemySpawnPoint = BottomRightCorner;
+                        break;
+                    default:
+                        EnemySpawnPoint = TopLeftCorner;
+                        break;
+                }
+
+
+                enemies.Add(new Enemy(EnemySpawnPoint, EnemyObjective));
+            }
+
             foreach (Enemy enemy in enemies)
             {
                 enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
