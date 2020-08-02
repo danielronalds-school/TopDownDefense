@@ -79,7 +79,7 @@ namespace TopDownDefense
             if(playerFire && fireDelay >= maxFireDelay)
             {
                 fireDelay = 0;
-                projectiles.Add(new Projectile(barrelRec, rotationAngle));
+                projectiles.Add(new Projectile(playerRec, rotationAngle));
             }
             else if(fireDelay < maxFireDelay)
             {

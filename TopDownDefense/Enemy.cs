@@ -26,6 +26,8 @@ namespace TopDownDefense
 
         string currentObjective = "Player";
 
+        int AgroRange = 200;
+
         public int health = 15;
 
         public bool enemyHit = false;
@@ -74,6 +76,15 @@ namespace TopDownDefense
         {
             Point objectivePoint;
 
+            if(InXAgroRange(Player) && InYAgroRange(Player))
+            {
+                currentObjective = "Player";
+            }
+            else
+            {
+                currentObjective = "Crystal";
+            }
+
             if (currentObjective == "Crystal")
             {
                 objectivePoint = new Point((Crystal.X + (Crystal.Width/2)), (Crystal.Y + (Crystal.Height / 2)));
@@ -91,6 +102,28 @@ namespace TopDownDefense
             x += (int)xSpeed;
             y += (int)ySpeed;
             enemyRec.Location = new Point(x, y);
+        }
+
+        private bool InXAgroRange(Rectangle Player)
+        {
+            int Range = Player.X - enemyRec.X;
+
+            if (Range <= AgroRange && Range >= (AgroRange * -1))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool InYAgroRange(Rectangle Player)
+        {
+            int Range = Player.Y - enemyRec.Y;
+
+            if (Range <= AgroRange && Range >= (AgroRange * -1))
+            {
+                return true;
+            }
+            return false;
         }
 
         private Point enemyCentre()

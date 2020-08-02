@@ -68,14 +68,32 @@ namespace TopDownDefense
                 p.moveProjectile(g);
             }
 
+            EnemySpawnManagement();
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
+                enemy.DrawEnemy(g);
+            }
+        }
+
+        private void updateTmr_Tick(object sender, EventArgs e)
+        {
+            player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
+            Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
+            Canvas.Invalidate();
+        }
+
+        private void EnemySpawnManagement()
+        {
+
             if (enemies.Count() < MaxEnemies)
             {
                 Point EnemySpawnPoint;
                 String EnemyObjective;
 
-                int RandomSpawnSelection = random.Next(1,4);
 
-                if(random.Next(1, 100) <= 50)
+                if (random.Next(1, 100) <= 100)
                 {
                     EnemyObjective = "Crystal";
                 }
@@ -84,7 +102,9 @@ namespace TopDownDefense
                     EnemyObjective = "Player";
                 }
 
-                switch(RandomSpawnSelection)
+                int RandomSpawnSelection = random.Next(1, 4);
+
+                switch (RandomSpawnSelection)
                 {
                     case 1:
                         EnemySpawnPoint = TopLeftCorner;
@@ -109,19 +129,6 @@ namespace TopDownDefense
 
                 enemies.Add(new Enemy(EnemySpawnPoint, EnemyObjective));
             }
-
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
-                enemy.DrawEnemy(g);
-            }
-        }
-
-        private void updateTmr_Tick(object sender, EventArgs e)
-        {
-            player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
-            Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
-            Canvas.Invalidate();
         }
 
         private void checkCollisions()
