@@ -76,7 +76,7 @@ namespace TopDownDefense
                 p.moveProjectile(g);
             }
 
-            EnemySpawnManagement();
+            //EnemySpawnManagement();
 
             foreach (Enemy enemy in enemies)
             {
@@ -95,6 +95,7 @@ namespace TopDownDefense
         {
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
             Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
+            Console.WriteLine(player.bulletSpray);
             Canvas.Invalidate();
         }
 

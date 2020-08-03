@@ -32,10 +32,10 @@ namespace TopDownDefense
         private int maxFireDelay = 7;
 
         public int bulletSpray = 0;
-        private int maxBulletSpray = 6;
+        private int maxBulletSpray = 5;
 
         private int bulletSprayIncreaseDelay;
-        private int bulletSprayMaxDelay = 10;
+        private int bulletSprayMaxDelay = 3;
 
         public int bulletDamage = 6;
 
@@ -76,12 +76,13 @@ namespace TopDownDefense
             // Ammo and Health Bars
             drawAmmoBar(g);
             drawHealthBar(g);
+            drawRecoilBar(g);
 
             matrix = new Matrix();
 
             rotationAngle = (int)angle.CalculateAngle(rifleBarrel(), Mouse);
 
-            if (playerFire && Ammo > 0)
+            if (playerFire && Ammo > 0 && fireDelay >= maxFireDelay)
             {
                 if (random.Next(1, 10) < 6)
                 {
@@ -136,7 +137,7 @@ namespace TopDownDefense
             int rectX, rectY;
 
             rectX = playerRec.X;
-            rectY = playerRec.Y - (barHeight * 5);
+            rectY = playerRec.Y - (barHeight * 6);
 
             Point rectPoint = new Point(rectX, rectY);
 
@@ -160,7 +161,7 @@ namespace TopDownDefense
             int rectX, rectY;
 
             rectX = playerRec.X;
-            rectY = playerRec.Y - (barHeight * 4);
+            rectY = playerRec.Y - (barHeight * 5);
 
             Point rectPoint = new Point(rectX, rectY);
 
@@ -169,6 +170,30 @@ namespace TopDownDefense
             ammoBarRect = new Rectangle(rectPoint, rectSize);
 
             g.FillRectangle(ammoBarBrush, ammoBarRect);
+
+        }
+
+        private void drawRecoilBar(Graphics g)
+        {
+            int rectWidth = barWidth - ((maxBulletSpray - bulletSpray)*20);
+            int rectHeight = barHeight;
+
+            Brush recoilBarBrush = new SolidBrush(Color.Orange);
+
+            Size rectSize = new Size(rectWidth, rectHeight);
+
+            int rectX, rectY;
+
+            rectX = playerRec.X;
+            rectY = playerRec.Y - (barHeight * 4);
+
+            Point rectPoint = new Point(rectX, rectY);
+
+            Rectangle recoilBarRect;
+
+            recoilBarRect = new Rectangle(rectPoint, rectSize);
+
+            g.FillRectangle(recoilBarBrush, recoilBarRect);
 
         }
 
