@@ -31,6 +31,8 @@ namespace TopDownDefense
 
         public List<Enemy> enemies = new List<Enemy>();
 
+        public List<AmmoPack> ammopacks = new List<AmmoPack>();
+
         Player player = new Player(300,300,1,0);
 
         bool playerLeft, playerRight, playerUp, playerDown, playerFire;
@@ -58,9 +60,15 @@ namespace TopDownDefense
         {
             g = e.Graphics;
 
-            checkCollisions();
+            checkCollisions(g);
 
             crystal.DrawCrystal(g);
+
+            foreach(AmmoPack a in ammopacks)
+            {
+                a.drawAmmoPack(g);
+            }
+
             player.DrawPlayer(g, mouse, playerFire);
             foreach (Projectile p in player.projectiles)
             {
@@ -93,7 +101,7 @@ namespace TopDownDefense
                 String EnemyObjective;
 
 
-                if (random.Next(1, 100) <= 100)
+                if (random.Next(1, 100) <= 25)
                 {
                     EnemyObjective = "Crystal";
                 }
@@ -131,7 +139,7 @@ namespace TopDownDefense
             }
         }
 
-        private void checkCollisions()
+        private void checkCollisions(Graphics g)
         {
             for (int i = 0; i < player.projectiles.Count(); i++)
             {
@@ -147,9 +155,35 @@ namespace TopDownDefense
 
                         if (enemies[x].health <= 0)
                         {
+                            int ammoChance = random.Next(1, 100);
+
+                            if(ammoChance <= 25)
+                            {
+                                ammopacks.Add(new AmmoPack(g, enemies[x].enemyRec.Location, random.Next(1, 3)));
+                            }
+
                             enemies.Remove(enemies[x]);
                         }
                         break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < ammopacks.Count(); i++)
+            {
+                if(player.playerRec.IntersectsWith(ammopacks[i].ammoRec))
+                {
+                    for (int x = 0; x < ammopacks[i].containedAmmo; x++)
+                    {
+                        if(player.Ammo < player.MaxAmmo)
+                        {
+                            player.Ammo++;
+                        }
+                        else
+                        {
+                            ammopacks.Remove(ammopacks[i]);
+                            break;
+                        }
                     }
                 }
             }

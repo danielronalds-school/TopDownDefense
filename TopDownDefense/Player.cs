@@ -28,7 +28,11 @@ namespace TopDownDefense
 
         private int maxFireDelay = 7;
 
-        public int bulletSpray = 3;
+        public int bulletSpray = 0;
+        private int maxBulletSpray = 6;
+
+        private int bulletSprayIncreaseDelay;
+        private int bulletSprayMaxDelay = 10;
 
         public int bulletDamage = 6;
 
@@ -65,7 +69,7 @@ namespace TopDownDefense
 
             rotationAngle = (int)angle.CalculateAngle(rifleBarrel(), Mouse);
 
-            if(playerFire && Ammo > 0)
+            if (playerFire && Ammo > 0)
             {
                 if (random.Next(1, 10) < 6)
                 {
@@ -75,6 +79,20 @@ namespace TopDownDefense
                 {
                     rotationAngle += bulletSpray;
                 }
+
+                if (bulletSpray < maxBulletSpray && bulletSprayIncreaseDelay == bulletSprayMaxDelay)
+                {
+                    bulletSpray++;
+                }
+                else if (bulletSprayIncreaseDelay < bulletSprayMaxDelay)
+                {
+                    bulletSprayIncreaseDelay++;
+                }
+            }
+            
+            if(!playerFire && bulletSpray > 0)
+            {
+                bulletSpray--;
             }
 
             matrix.RotateAt(rotationAngle, spriteCentre());
