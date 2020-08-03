@@ -14,6 +14,9 @@ namespace TopDownDefense
 
         Random random = new Random();
 
+        private int barWidth = 100;
+        private int barHeight = 5;
+
         private int x, y, width, height;
 
         private Image playerImage;
@@ -38,7 +41,10 @@ namespace TopDownDefense
 
         public int Ammo;
 
-        public int MaxAmmo = 100;
+        public int MaxAmmo = 50;
+
+        public int Health;
+        public int MaxHealth = 100;
 
         private Matrix matrix;
 
@@ -54,16 +60,22 @@ namespace TopDownDefense
             playerRec = new Rectangle(x, y, width, height);
 
             Ammo = MaxAmmo;
+            Health = MaxHealth;
 
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));
         }
 
         public void DrawPlayer(Graphics g, Point Mouse, bool playerFire)
         {
+
             int rotationAngle;
 
             playerRec.Location = new Point(x, y);
             barrelRec.Location = rifleBarrel();
+
+            // Ammo and Health Bars
+            drawAmmoBar(g);
+            drawHealthBar(g);
 
             matrix = new Matrix();
 
@@ -110,6 +122,54 @@ namespace TopDownDefense
             {
                 fireDelay++;
             }
+        }
+
+        private void drawHealthBar(Graphics g)
+        {
+            int rectWidth = barWidth - ((MaxHealth - Health) );
+            int rectHeight = barHeight;
+
+            Brush healthBarBrush = new SolidBrush(Color.Red);
+
+            Size rectSize = new Size(rectWidth, rectHeight);
+
+            int rectX, rectY;
+
+            rectX = playerRec.X;
+            rectY = playerRec.Y - (barHeight * 5);
+
+            Point rectPoint = new Point(rectX, rectY);
+
+            Rectangle healthbarRect;
+
+            healthbarRect = new Rectangle(rectPoint, rectSize);
+
+            g.FillRectangle(healthBarBrush, healthbarRect);
+
+        }
+
+        private void drawAmmoBar(Graphics g)
+        {
+            int rectWidth = barWidth - ((MaxAmmo - Ammo) * 2);
+            int rectHeight = barHeight;
+
+            Brush ammoBarBrush = new SolidBrush(Color.Yellow);
+
+            Size rectSize = new Size(rectWidth, rectHeight);
+
+            int rectX, rectY;
+
+            rectX = playerRec.X;
+            rectY = playerRec.Y - (barHeight * 4);
+
+            Point rectPoint = new Point(rectX, rectY);
+
+            Rectangle ammoBarRect;
+
+            ammoBarRect = new Rectangle(rectPoint, rectSize);
+
+            g.FillRectangle(ammoBarBrush, ammoBarRect);
+
         }
 
         public Point spriteCentre()

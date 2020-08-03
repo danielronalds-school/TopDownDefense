@@ -28,6 +28,8 @@ namespace TopDownDefense
 
         int AgroRange = 200;
 
+        public int Damage = 1;
+
         public int health = 15;
 
         public bool enemyHit = false;

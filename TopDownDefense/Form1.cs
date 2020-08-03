@@ -157,7 +157,7 @@ namespace TopDownDefense
                         {
                             int ammoChance = random.Next(1, 100);
 
-                            if(ammoChance <= 25)
+                            if(ammoChance <= 35)
                             {
                                 ammopacks.Add(new AmmoPack(g, enemies[x].enemyRec.Location, random.Next(1, 3)));
                             }
@@ -185,6 +185,14 @@ namespace TopDownDefense
                             break;
                         }
                     }
+                }
+            }
+
+            for(int x = 0; x < enemies.Count(); x++)
+            {
+                if(enemies[x].enemyRec.IntersectsWith(player.playerRec))
+                {
+                    player.Health -= enemies[x].Damage;
                 }
             }
         }
