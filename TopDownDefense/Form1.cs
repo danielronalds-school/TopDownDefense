@@ -83,6 +83,12 @@ namespace TopDownDefense
                 enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
                 enemy.DrawEnemy(g);
             }
+
+            if(CheckGameOver())
+            {
+                updateTmr.Enabled = false;
+                Console.WriteLine("GAME OVER");
+            }
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
@@ -90,6 +96,15 @@ namespace TopDownDefense
             player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
             Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
             Canvas.Invalidate();
+        }
+
+        private bool CheckGameOver()
+        {
+            if(player.Health <= 0 || crystal.crystalHealth <= 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void EnemySpawnManagement()
@@ -190,7 +205,11 @@ namespace TopDownDefense
 
             for(int x = 0; x < enemies.Count(); x++)
             {
-                if(enemies[x].enemyRec.IntersectsWith(player.playerRec))
+                if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec))
+                {
+                    crystal.crystalHealth -= enemies[x].Damage * 6;
+                }
+                else if(enemies[x].enemyRec.IntersectsWith(player.playerRec))
                 {
                     player.Health -= enemies[x].Damage;
                 }
