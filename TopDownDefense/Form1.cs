@@ -32,6 +32,7 @@ namespace TopDownDefense
         public List<Enemy> enemies = new List<Enemy>();
 
         public List<AmmoPack> ammopacks = new List<AmmoPack>();
+        public List<HealthPack> healthpacks = new List<HealthPack>();
 
         Player player = new Player(300,300,1,0);
 
@@ -69,6 +70,11 @@ namespace TopDownDefense
                 a.drawAmmoPack(g);
             }
 
+            foreach(HealthPack h in healthpacks)
+            {
+                h.drawHealthPack(g);
+            }
+
             player.DrawPlayer(g, mouse, playerFire);
             foreach (Projectile p in player.projectiles)
             {
@@ -76,7 +82,7 @@ namespace TopDownDefense
                 p.moveProjectile(g);
             }
 
-            //EnemySpawnManagement();
+            EnemySpawnManagement();
 
             foreach (Enemy enemy in enemies)
             {
@@ -157,7 +163,7 @@ namespace TopDownDefense
 
         private void checkCollisions(Graphics g)
         {
-            for (int i = 0; i < player.projectiles.Count(); i++)
+            for (int i = 0; i < player.projectiles.Count(); i++) // Seeing if any bullets have hit any drones
             {
                 for (int x = 0; x < enemies.Count(); x++)
                 {
@@ -171,11 +177,15 @@ namespace TopDownDefense
 
                         if (enemies[x].health <= 0)
                         {
-                            int ammoChance = random.Next(1, 100);
+                            int dropChance = random.Next(1, 100);
 
-                            if(ammoChance <= 35)
+                            if(dropChance <= 35)
                             {
                                 ammopacks.Add(new AmmoPack(g, enemies[x].enemyRec.Location, random.Next(1, 3)));
+                            }
+                            else if(dropChance > 90)
+                            {
+                                healthpacks.Add(new HealthPack(enemies[x].enemyRec.Location));
                             }
 
                             enemies.Remove(enemies[x]);
@@ -185,7 +195,7 @@ namespace TopDownDefense
                 }
             }
 
-            for (int i = 0; i < ammopacks.Count(); i++)
+            for (int i = 0; i < ammopacks.Count(); i++) // Ammo Pack Collisions Check
             {
                 if(player.playerRec.IntersectsWith(ammopacks[i].ammoRec))
                 {
@@ -204,7 +214,26 @@ namespace TopDownDefense
                 }
             }
 
-            for(int x = 0; x < enemies.Count(); x++)
+            for (int i = 0; i < healthpacks.Count(); i++) // Health pack collisions check
+            {
+                if(player.playerRec.IntersectsWith(healthpacks[i].healthRec))
+                {
+                    for(int x = 0; x < healthpacks[i].containedHealth; x++)
+                    {
+                        if(player.Health < player.MaxHealth)
+                        {
+                            player.Health++;
+                        }
+                        else
+                        {
+                            healthpacks.Remove(healthpacks[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for(int x = 0; x < enemies.Count(); x++) // Checking to see if any drones should be damaging the crystal
             {
                 if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec))
                 {
