@@ -21,6 +21,8 @@ namespace TopDownDefense
 
         private Matrix enemyMatrix;
 
+        private string prefferedTarget;
+
         private int enemySpeed = 2;
         private double xSpeed, ySpeed;
 
@@ -39,7 +41,7 @@ namespace TopDownDefense
 
         public Enemy(Point position, string objective)
         {
-            width = 44;
+            width = 43;
             height = width;
             x = position.X;
             y = position.Y;
@@ -47,7 +49,12 @@ namespace TopDownDefense
 
             enemyRec = new Rectangle(x,y,width,height);
 
-            currentObjective = objective;
+            prefferedTarget = objective;
+
+            if(prefferedTarget == "Player")
+            {
+                enemySpeed = 3;
+            }
         }
 
         public void DrawEnemy(Graphics g)
@@ -77,23 +84,27 @@ namespace TopDownDefense
         public void moveEnemy(Graphics g, Rectangle Crystal, Rectangle Player)
         {
             Point objectivePoint;
+            currentObjective = prefferedTarget;
 
-            if(InXAgroRange(Player) && InYAgroRange(Player))
-            {
-                currentObjective = "Player";
-            }
-            else
-            {
-                currentObjective = "Crystal";
-            }
 
-            if (currentObjective == "Crystal")
-            {
-                objectivePoint = new Point((Crystal.X + (Crystal.Width/2)), (Crystal.Y + (Crystal.Height / 2)));
-            }
-            else
+            if (prefferedTarget == "Player")
             {
                 objectivePoint = new Point((Player.X + (Player.Width / 2)), (Player.Y + (Player.Height / 2)));
+            }
+            else if (prefferedTarget == "Crystal")
+            {
+                objectivePoint = new Point((Crystal.X + (Crystal.Width / 2)), (Crystal.Y + (Crystal.Height / 2)));
+            }
+            else
+            {
+                if (InXAgroRange(Player) && InYAgroRange(Player) && prefferedTarget == "any")
+                {
+                    objectivePoint = new Point((Player.X + (Player.Width / 2)), (Player.Y + (Player.Height / 2)));
+                }
+                else
+                {
+                    objectivePoint = new Point((Crystal.X + (Crystal.Width / 2)), (Crystal.Y + (Crystal.Height / 2)));
+                }
             }
 
             objectiveAngle = (int)angle.CalculateAngle(enemyCentre(), objectivePoint);

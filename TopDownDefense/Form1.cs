@@ -122,14 +122,19 @@ namespace TopDownDefense
                 Point EnemySpawnPoint;
                 String EnemyObjective;
 
+                int TargetChance = random.Next(1, 100);
 
-                if (random.Next(1, 100) <= 25)
+                if (TargetChance <= 25)
                 {
                     EnemyObjective = "Crystal";
                 }
-                else
+                else if(TargetChance > 75)
                 {
                     EnemyObjective = "Player";
+                }
+                else
+                {
+                    EnemyObjective = "any";
                 }
 
                 int RandomSpawnSelection = random.Next(1, 4);
@@ -237,7 +242,7 @@ namespace TopDownDefense
             {
                 if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec))
                 {
-                    crystal.crystalHealth -= enemies[x].Damage * 6;
+                    crystal.crystalHealth -= enemies[x].Damage * 15;
                 }
                 else if(enemies[x].enemyRec.IntersectsWith(player.playerRec))
                 {

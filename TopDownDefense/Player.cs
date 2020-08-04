@@ -44,7 +44,7 @@ namespace TopDownDefense
         public int MaxAmmo = 50;
 
         public int Health;
-        public int MaxHealth = 100;
+        public int MaxHealth = 200;
 
         private Matrix matrix;
 
@@ -127,10 +127,11 @@ namespace TopDownDefense
 
         private void drawHealthBar(Graphics g)
         {
-            int rectWidth = barWidth - ((MaxHealth - Health) );
+            int rectWidth = barWidth - ((MaxHealth - Health) /2);
             int rectHeight = barHeight;
 
             Brush healthBarBrush = new SolidBrush(Color.Red);
+            Brush backgroundBrush = new SolidBrush(Color.LightGray);
 
             Size rectSize = new Size(rectWidth, rectHeight);
 
@@ -142,9 +143,12 @@ namespace TopDownDefense
             Point rectPoint = new Point(rectX, rectY);
 
             Rectangle healthbarRect;
+            Rectangle barBacking;
 
             healthbarRect = new Rectangle(rectPoint, rectSize);
+            barBacking = new Rectangle(rectPoint.X, rectPoint.Y, barWidth, barHeight);
 
+            g.FillRectangle(backgroundBrush, barBacking);
             g.FillRectangle(healthBarBrush, healthbarRect);
 
         }
@@ -155,6 +159,7 @@ namespace TopDownDefense
             int rectHeight = barHeight;
 
             Brush ammoBarBrush = new SolidBrush(Color.Yellow);
+            Brush backgroundBrush = new SolidBrush(Color.LightGray);
 
             Size rectSize = new Size(rectWidth, rectHeight);
 
@@ -166,9 +171,12 @@ namespace TopDownDefense
             Point rectPoint = new Point(rectX, rectY);
 
             Rectangle ammoBarRect;
+            Rectangle barBacking;
 
             ammoBarRect = new Rectangle(rectPoint, rectSize);
+            barBacking = new Rectangle(rectPoint.X, rectPoint.Y, barWidth, barHeight);
 
+            g.FillRectangle(backgroundBrush, barBacking);
             g.FillRectangle(ammoBarBrush, ammoBarRect);
 
         }
@@ -179,6 +187,7 @@ namespace TopDownDefense
             int rectHeight = barHeight;
 
             Brush recoilBarBrush = new SolidBrush(Color.Orange);
+            Brush backgroundBrush = new SolidBrush(Color.LightGray);
 
             Size rectSize = new Size(rectWidth, rectHeight);
 
@@ -190,9 +199,12 @@ namespace TopDownDefense
             Point rectPoint = new Point(rectX, rectY);
 
             Rectangle recoilBarRect;
+            Rectangle barBacking;
 
             recoilBarRect = new Rectangle(rectPoint, rectSize);
+            barBacking = new Rectangle(rectPoint.X, rectPoint.Y, barWidth, barHeight);
 
+            g.FillRectangle(backgroundBrush, barBacking);
             g.FillRectangle(recoilBarBrush, recoilBarRect);
 
         }
