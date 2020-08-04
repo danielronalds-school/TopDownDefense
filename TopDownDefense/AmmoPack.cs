@@ -26,6 +26,8 @@ namespace TopDownDefense
 
             Point ammoPoint = new Point(x, y);
 
+            ammoImage = Properties.Resources.ammopack;
+
             ammoRec = new Rectangle(ammoPoint, new Size(width, height));
 
             containedAmmo = 25 * size;
@@ -34,7 +36,7 @@ namespace TopDownDefense
 
         public void drawAmmoPack(Graphics g)
         {
-            g.DrawRectangle(Pens.Yellow, ammoRec);
+            g.DrawImage(ammoImage, ammoRec);
         }
 
     }

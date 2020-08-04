@@ -63,6 +63,16 @@ namespace TopDownDefense.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ammopack {
+            get {
+                object obj = ResourceManager.GetObject("ammopack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bullet {
             get {
                 object obj = ResourceManager.GetObject("bullet", resourceCulture);
@@ -86,6 +96,26 @@ namespace TopDownDefense.Properties {
         internal static System.Drawing.Bitmap Drone {
             get {
                 object obj = ResourceManager.GetObject("Drone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Drone_2 {
+            get {
+                object obj = ResourceManager.GetObject("Drone_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap healthpack {
+            get {
+                object obj = ResourceManager.GetObject("healthpack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

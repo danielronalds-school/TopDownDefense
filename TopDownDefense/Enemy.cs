@@ -45,7 +45,7 @@ namespace TopDownDefense
             height = width;
             x = position.X;
             y = position.Y;
-            enemyImage = Properties.Resources.Drone;
+            enemyImage = Properties.Resources.Drone_2;
 
             enemyRec = new Rectangle(x,y,width,height);
 

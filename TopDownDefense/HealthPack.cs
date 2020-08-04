@@ -25,15 +25,18 @@ namespace TopDownDefense
             height = width;
 
             Point healthPoint = new Point(x, y);
+            healthImage = Properties.Resources.healthpack;
 
-            healthRec = new Rectangle(healthPoint, new Size(width, height));
+            Size healthSize = new Size(width,height);
+
+            healthRec = new Rectangle(healthPoint, healthSize);
 
             containedHealth = 50;
         }
 
         public void drawHealthPack(Graphics g)
         {
-            g.DrawRectangle(Pens.Red, healthRec);
+            g.DrawImage(healthImage, healthRec);
         }
     }
 }
