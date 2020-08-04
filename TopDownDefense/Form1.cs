@@ -202,39 +202,27 @@ namespace TopDownDefense
 
             for (int i = 0; i < ammopacks.Count(); i++) // Ammo Pack Collisions Check
             {
-                if(player.playerRec.IntersectsWith(ammopacks[i].ammoRec))
+                if(player.playerRec.IntersectsWith(ammopacks[i].ammoRec) && player.Ammo < player.MaxAmmo)
                 {
-                    for (int x = 0; x < ammopacks[i].containedAmmo; x++)
+                    player.Ammo += ammopacks[i].containedAmmo;
+                    if(player.Ammo > player.MaxAmmo)
                     {
-                        if(player.Ammo < player.MaxAmmo)
-                        {
-                            player.Ammo++;
-                        }
-                        else
-                        {
-                            ammopacks.Remove(ammopacks[i]);
-                            break;
-                        }
+                        player.Ammo = player.MaxAmmo;
                     }
+                    ammopacks.Remove(ammopacks[i]);
                 }
             }
 
             for (int i = 0; i < healthpacks.Count(); i++) // Health pack collisions check
             {
-                if(player.playerRec.IntersectsWith(healthpacks[i].healthRec))
+                if(player.playerRec.IntersectsWith(healthpacks[i].healthRec) && player.Health < player.MaxHealth)
                 {
-                    for(int x = 0; x < healthpacks[i].containedHealth; x++)
+                    player.Health += healthpacks[i].containedHealth;
+                    if(player.Health > player.MaxHealth)
                     {
-                        if(player.Health < player.MaxHealth)
-                        {
-                            player.Health++;
-                        }
-                        else
-                        {
-                            healthpacks.Remove(healthpacks[i]);
-                            break;
-                        }
+                        player.Health = player.MaxHealth;
                     }
+                    healthpacks.Remove(healthpacks[i]);
                 }
             }
 
