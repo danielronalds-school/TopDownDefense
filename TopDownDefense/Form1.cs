@@ -215,24 +215,25 @@ namespace TopDownDefense
 
             for (int i = 0; i < healthpacks.Count(); i++) // Health pack collisions check
             {
+                // Is the Player touching a health pack, and do they need it?
                 if(player.playerRec.IntersectsWith(healthpacks[i].healthRec) && player.Health < player.MaxHealth)
                 {
-                    player.Health += healthpacks[i].containedHealth;
-                    if(player.Health > player.MaxHealth)
+                    player.Health += healthpacks[i].containedHealth; // Adding the health packs health to the players health 
+                    if(player.Health > player.MaxHealth) // Is the player overhealed?? If so make their health the max.
                     {
                         player.Health = player.MaxHealth;
                     }
-                    healthpacks.Remove(healthpacks[i]);
+                    healthpacks.Remove(healthpacks[i]); // Get rid of it so that it can't be used again
                 }
             }
 
-            for(int x = 0; x < enemies.Count(); x++) // Checking to see if any drones should be damaging the crystal
+            for(int x = 0; x < enemies.Count(); x++) // Checking to see if any drones should be dealing damage
             {
-                if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec))
+                if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec)) // Is the drone touching the objective?? if so damage the objective
                 {
                     crystal.crystalHealth -= enemies[x].Damage * 15;
                 }
-                else if(enemies[x].enemyRec.IntersectsWith(player.playerRec))
+                else if(enemies[x].enemyRec.IntersectsWith(player.playerRec)) // Is the drone touching the player?? if so damage the player
                 {
                     player.Health -= enemies[x].Damage;
                 }

@@ -26,7 +26,7 @@ namespace TopDownDefense
 
             Point ammoPoint = new Point(x, y);
 
-            ammoImage = Properties.Resources.ammopack;
+            ammoImage = Properties.Resources.ammopack_2;
 
             ammoRec = new Rectangle(ammoPoint, new Size(width, height));
 

@@ -29,7 +29,7 @@ namespace TopDownDefense
             height = 6;
             x = 20000;
             y = 20000;
-            projectileImage = Properties.Resources.bullet;
+            projectileImage = Properties.Resources.bullet_2;
             projectileRec = new Rectangle(x, y, width, height);
 
             xSpeed = projectileSpeed * (Math.Cos((projectileAngle) * Math.PI / 180));
