@@ -127,5 +127,20 @@
   <ItemGroup>
     <None Include="Resources\grass.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\intersection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\intersection1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\intersection_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\intersection_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backdrop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

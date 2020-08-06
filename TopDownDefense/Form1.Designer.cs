@@ -37,7 +37,8 @@
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Canvas.BackgroundImage = global::TopDownDefense.Properties.Resources.backdrop;
+            this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Canvas.Location = new System.Drawing.Point(10, 10);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(1160, 640);

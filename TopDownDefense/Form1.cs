@@ -66,6 +66,8 @@ namespace TopDownDefense
         {
             g = e.Graphics;
 
+            //g.DrawImage(Properties.Resources.backdrop, new Rectangle(0,0,1160,640));
+
             checkCollisions(g);
 
             objective.DrawObjective(g);
