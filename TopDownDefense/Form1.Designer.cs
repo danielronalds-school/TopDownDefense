@@ -31,11 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.Canvas = new System.Windows.Forms.Panel();
             this.updateTmr = new System.Windows.Forms.Timer(this.components);
+            this.waveLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Canvas.Location = new System.Drawing.Point(10, 10);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(1160, 640);
@@ -51,11 +53,21 @@
             this.updateTmr.Interval = 1;
             this.updateTmr.Tick += new System.EventHandler(this.updateTmr_Tick);
             // 
+            // waveLbl
+            // 
+            this.waveLbl.AutoSize = true;
+            this.waveLbl.Location = new System.Drawing.Point(1176, 20);
+            this.waveLbl.Name = "waveLbl";
+            this.waveLbl.Size = new System.Drawing.Size(36, 13);
+            this.waveLbl.TabIndex = 1;
+            this.waveLbl.Text = "Wave";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.ClientSize = new System.Drawing.Size(1283, 661);
+            this.Controls.Add(this.waveLbl);
             this.Controls.Add(this.Canvas);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -68,6 +80,7 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -75,6 +88,7 @@
 
         private System.Windows.Forms.Panel Canvas;
         private System.Windows.Forms.Timer updateTmr;
+        private System.Windows.Forms.Label waveLbl;
     }
 }
 

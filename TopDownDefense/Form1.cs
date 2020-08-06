@@ -15,11 +15,13 @@ namespace TopDownDefense
     {
         Graphics g;
 
+        Objective objective;
+
         Random random = new Random();
 
         Angles angle = new Angles();
 
-        Crystal crystal = new Crystal();
+        WaveManager wavemanager = new WaveManager();
 
         // Spawn Points
         Point TopLeftCorner;
@@ -27,7 +29,7 @@ namespace TopDownDefense
         Point BottomLeftCorner;
         Point BottomRightCorner;
 
-        int MaxEnemies = 8;
+        int MaxEnemies = 15;
 
         public List<Enemy> enemies = new List<Enemy>();
 
@@ -46,6 +48,9 @@ namespace TopDownDefense
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, Canvas, new object[] { true });
 
             ConfigureSpawnPoints();
+            objective = new Objective(Canvas.Size);
+
+            wavemanager.nextWave();
         }
 
         private void ConfigureSpawnPoints()
@@ -63,7 +68,7 @@ namespace TopDownDefense
 
             checkCollisions(g);
 
-            crystal.DrawCrystal(g);
+            objective.DrawObjective(g);
 
             foreach(AmmoPack a in ammopacks)
             {
@@ -86,7 +91,7 @@ namespace TopDownDefense
 
             foreach (Enemy enemy in enemies)
             {
-                enemy.moveEnemy(g, crystal.crystalRec, player.playerRec);
+                enemy.moveEnemy(g, objective.objectiveRec, player.playerRec);
                 enemy.DrawEnemy(g);
             }
 
@@ -95,6 +100,15 @@ namespace TopDownDefense
                 updateTmr.Enabled = false;
                 Console.WriteLine("GAME OVER");
             }
+
+            if(wavemanager.waveOver())
+            {
+                Console.WriteLine("Wave over!");
+                wavemanager.Wave++;
+                wavemanager.nextWave();
+            }
+
+            waveLbl.Text = "Wave: " + wavemanager.Wave;
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
@@ -107,7 +121,7 @@ namespace TopDownDefense
 
         private bool CheckGameOver()
         {
-            if(player.Health <= 0 || crystal.crystalHealth <= 0)
+            if(player.Health <= 0 || objective.objectiveHealth <= 0)
             {
                 return true;
             }
@@ -117,7 +131,7 @@ namespace TopDownDefense
         private void EnemySpawnManagement()
         {
 
-            if (enemies.Count() < MaxEnemies)
+            if (enemies.Count() < wavemanager.onScreenEnemies && wavemanager.enemiesInWave > 0)
             {
                 Point EnemySpawnPoint;
                 String EnemyObjective;
@@ -194,6 +208,7 @@ namespace TopDownDefense
                             }
 
                             enemies.Remove(enemies[x]);
+                            wavemanager.enemiesInWave--;
                         }
                         break;
                     }
@@ -229,9 +244,9 @@ namespace TopDownDefense
 
             for(int x = 0; x < enemies.Count(); x++) // Checking to see if any drones should be dealing damage
             {
-                if(enemies[x].enemyRec.IntersectsWith(crystal.crystalRec)) // Is the drone touching the objective?? if so damage the objective
+                if(enemies[x].enemyRec.IntersectsWith(objective.objectiveRec)) // Is the drone touching the objective?? if so damage the objective
                 {
-                    crystal.crystalHealth -= enemies[x].Damage * 15;
+                    objective.objectiveHealth -= enemies[x].Damage * 15;
                 }
                 else if(enemies[x].enemyRec.IntersectsWith(player.playerRec)) // Is the drone touching the player?? if so damage the player
                 {
