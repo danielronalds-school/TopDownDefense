@@ -9,6 +9,10 @@ namespace TopDownDefense
 {
     class WaveManager
     {
+        public int waveDelay;
+        public int maxWaveDelay = 1000;
+        public bool Recharging = false;
+
         public int Wave = 1;
         public int onScreenEnemies;
         public int enemiesInWave;
@@ -22,6 +26,9 @@ namespace TopDownDefense
             enemiesInWave = numberOfEnemiesInWave(Wave);
 
             currentEnemiesInWave = enemiesInWave;
+
+            waveDelay = 0;
+            Recharging = false;
 
             Console.WriteLine("Wave " + Wave + " Starting");
         }
@@ -42,12 +49,17 @@ namespace TopDownDefense
             Brush waveBarBrush = new SolidBrush(Color.Blue);
             Brush backgroundBrush = new SolidBrush(Color.LightGray);
 
+            if(Recharging)
+            {
+                rectWidth = barWidth - waveDelay;
+            }
+
             Size rectSize = new Size(rectWidth, rectHeight);
 
             int rectX, rectY;
 
             rectX = 0 + (canvas.Width/2 - barWidth/2);
-            rectY = 20;
+            rectY = 40;
 
             Point rectPoint = new Point(rectX, rectY);
 

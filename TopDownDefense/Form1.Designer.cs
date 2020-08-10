@@ -32,15 +32,17 @@
             this.Canvas = new System.Windows.Forms.Panel();
             this.updateTmr = new System.Windows.Forms.Timer(this.components);
             this.waveLbl = new System.Windows.Forms.Label();
+            this.Canvas.SuspendLayout();
             this.SuspendLayout();
             // 
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Canvas.Location = new System.Drawing.Point(10, 10);
+            this.Canvas.Controls.Add(this.waveLbl);
+            this.Canvas.Location = new System.Drawing.Point(0, 0);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1160, 640);
+            this.Canvas.Size = new System.Drawing.Size(1200, 700);
             this.Canvas.TabIndex = 0;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
@@ -56,7 +58,7 @@
             // waveLbl
             // 
             this.waveLbl.AutoSize = true;
-            this.waveLbl.Location = new System.Drawing.Point(1176, 20);
+            this.waveLbl.Location = new System.Drawing.Point(519, 27);
             this.waveLbl.Name = "waveLbl";
             this.waveLbl.Size = new System.Drawing.Size(36, 13);
             this.waveLbl.TabIndex = 1;
@@ -66,8 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 661);
-            this.Controls.Add(this.waveLbl);
+            this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.Canvas);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -79,8 +80,9 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
+            this.Canvas.ResumeLayout(false);
+            this.Canvas.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

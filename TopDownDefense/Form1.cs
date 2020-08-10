@@ -8,11 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Drawing.Text;
 
 namespace TopDownDefense
 {
     public partial class Form1 : Form
     {
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
+            IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
+
+        private PrivateFontCollection fonts = new PrivateFontCollection();
+
+        Font myFont;
+
         Graphics g;
 
         Objective objective;
@@ -48,7 +57,30 @@ namespace TopDownDefense
             ConfigureSpawnPoints();
             objective = new Objective(Canvas.Size);
 
+            addFont();
+            updateFonts();
+
             wavemanager.nextWave();
+        }
+
+        private void addFont()
+        {
+            byte[] fontData = Properties.Resources.FFFFORWA;
+            IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
+            System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+            uint dummy = 0;
+            fonts.AddMemoryFont(fontPtr, Properties.Resources.FFFFORWA.Length);
+            AddFontMemResourceEx(fontPtr, (uint)Properties.Resources.FFFFORWA.Length, IntPtr.Zero, ref dummy);
+            System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
+
+            myFont = new Font(fonts.Families[0], 16.0F);
+        }
+
+        private void updateFonts()
+        {
+            waveLbl.Font = myFont;
+            waveLbl.Top = 0;
+            waveLbl.Left = 0 + (Canvas.Width / 2 - waveLbl.Width/ 2);
         }
 
         private void ConfigureSpawnPoints()
@@ -65,6 +97,23 @@ namespace TopDownDefense
             g = e.Graphics;
 
             checkCollisions(g);
+
+            if (wavemanager.waveOver())
+            {
+                if (wavemanager.waveDelay == wavemanager.maxWaveDelay)
+                {
+                    Console.WriteLine("Wave over!");
+                    wavemanager.Wave++;
+                    wavemanager.nextWave();
+                }
+                else
+                {
+                    wavemanager.Recharging = true;
+                    wavemanager.waveDelay++;
+                }
+            }
+
+            waveLbl.Text = "Wave: " + wavemanager.Wave;
 
             objective.DrawObjective(g);
 
@@ -86,11 +135,6 @@ namespace TopDownDefense
                 p.drawProjectile(g);
                 p.moveProjectile(g);
             }
-            //Parallel.ForEach(player.projectiles, (p) =>
-            //{
-            //    p.drawProjectile(g);
-            //    p.moveProjectile(g);
-            //});
 
             EnemySpawnManagement();
 
@@ -100,26 +144,12 @@ namespace TopDownDefense
                 enemy.DrawEnemy(g);
             }
 
-            //Parallel.ForEach(enemies, (enemy) =>
-            //{
-            //    enemy.moveEnemy(g, objective.objectiveRec, player.playerRec);
-            //    enemy.DrawEnemy(g);
-            //});
-
             if (CheckGameOver())
             {
                 updateTmr.Enabled = false;
                 Console.WriteLine("GAME OVER");
             }
 
-            if(wavemanager.waveOver())
-            {
-                Console.WriteLine("Wave over!");
-                wavemanager.Wave++;
-                wavemanager.nextWave();
-            }
-
-            waveLbl.Text = "Wave: " + wavemanager.Wave;
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)

@@ -89,6 +89,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\FFFFORWA.TTF" />
     <None Include="Resources\TopDownCharacter.png" />
   </ItemGroup>
   <ItemGroup>
