@@ -10,7 +10,7 @@ namespace TopDownDefense
     class WaveManager
     {
         public int waveDelay;
-        public int maxWaveDelay = 1000;
+        public int maxWaveDelay = 500;
         public bool Recharging = false;
 
         public int Wave = 1;
@@ -51,7 +51,7 @@ namespace TopDownDefense
 
             if(Recharging)
             {
-                rectWidth = barWidth - waveDelay;
+                rectWidth = barWidth - (waveDelay * 2);
             }
 
             Size rectSize = new Size(rectWidth, rectHeight);
@@ -71,6 +71,27 @@ namespace TopDownDefense
 
             g.FillRectangle(backgroundBrush, barBacking);
             g.FillRectangle(waveBarBrush, waveBarRect);
+        }
+
+        public void drawText(Graphics g, Font font, Size canvas)
+        {
+            SolidBrush brush = new SolidBrush(Color.White);
+            Rectangle Bounds;
+            string text;
+
+            text = "Wave " + Wave;
+            var textSize = g.MeasureString(text, font);
+            Size textRectSize = textSize.ToSize();
+
+            textRectSize.Width += 5; // Without this some of the text is cut off
+
+            int x = 0 + (canvas.Width / 2 - textRectSize.Width / 2);
+            Point point = new Point(x, 0);
+
+            Bounds = new Rectangle(point, textRectSize);
+
+            g.DrawString(text, font, brush, Bounds);
+            //g.DrawRectangle(Pens.Red, point.X, point.Y, Bounds.Width, Bounds.Height);
         }
 
         public bool waveOver()

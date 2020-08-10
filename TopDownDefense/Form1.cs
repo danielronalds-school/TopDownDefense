@@ -39,6 +39,7 @@ namespace TopDownDefense
         Point BottomRightCorner;
 
         public List<Enemy> enemies = new List<Enemy>();
+        private bool EnemySpawns = true;
 
         public List<AmmoPack> ammopacks = new List<AmmoPack>();
         public List<HealthPack> healthpacks = new List<HealthPack>();
@@ -58,7 +59,7 @@ namespace TopDownDefense
             objective = new Objective(Canvas.Size);
 
             addFont();
-            updateFonts();
+            //updateFonts();
 
             wavemanager.nextWave();
         }
@@ -78,9 +79,9 @@ namespace TopDownDefense
 
         private void updateFonts()
         {
-            waveLbl.Font = myFont;
-            waveLbl.Top = 0;
-            waveLbl.Left = 0 + (Canvas.Width / 2 - waveLbl.Width/ 2);
+            //waveLbl.Font = myFont;
+            //waveLbl.Top = 0;
+            //waveLbl.Left = 0 + (Canvas.Width / 2 - waveLbl.Width/ 2);
         }
 
         private void ConfigureSpawnPoints()
@@ -110,10 +111,12 @@ namespace TopDownDefense
                 {
                     wavemanager.Recharging = true;
                     wavemanager.waveDelay++;
+                    enemies.Clear();
                 }
             }
 
-            waveLbl.Text = "Wave: " + wavemanager.Wave;
+            //waveLbl.Text = "Wave: " + wavemanager.Wave;
+            wavemanager.drawText(g, myFont, Canvas.Size);
 
             objective.DrawObjective(g);
 
@@ -122,7 +125,7 @@ namespace TopDownDefense
                 a.drawAmmoPack(g);
             }
 
-            foreach(HealthPack h in healthpacks)
+            foreach (HealthPack h in healthpacks)
             {
                 h.drawHealthPack(g);
             }
@@ -136,7 +139,10 @@ namespace TopDownDefense
                 p.moveProjectile(g);
             }
 
-            EnemySpawnManagement();
+            if (EnemySpawns)
+            { 
+                EnemySpawnManagement();
+            }
 
             foreach (Enemy enemy in enemies)
             {

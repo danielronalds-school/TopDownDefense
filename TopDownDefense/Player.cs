@@ -126,8 +126,7 @@ namespace TopDownDefense
         }
 
         private void drawHealthBar(Graphics g)
-        {
-            int rectWidth = barWidth - ((MaxHealth - Health) /2);
+        {           int rectWidth = barWidth - ((MaxHealth - Health) /2);
             int rectHeight = barHeight;
 
             Brush healthBarBrush = new SolidBrush(Color.Red);

@@ -31,15 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.Canvas = new System.Windows.Forms.Panel();
             this.updateTmr = new System.Windows.Forms.Timer(this.components);
-            this.waveLbl = new System.Windows.Forms.Label();
-            this.Canvas.SuspendLayout();
             this.SuspendLayout();
             // 
             // Canvas
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Canvas.Controls.Add(this.waveLbl);
             this.Canvas.Location = new System.Drawing.Point(0, 0);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(1200, 700);
@@ -54,15 +51,6 @@
             this.updateTmr.Enabled = true;
             this.updateTmr.Interval = 1;
             this.updateTmr.Tick += new System.EventHandler(this.updateTmr_Tick);
-            // 
-            // waveLbl
-            // 
-            this.waveLbl.AutoSize = true;
-            this.waveLbl.Location = new System.Drawing.Point(519, 27);
-            this.waveLbl.Name = "waveLbl";
-            this.waveLbl.Size = new System.Drawing.Size(36, 13);
-            this.waveLbl.TabIndex = 1;
-            this.waveLbl.Text = "Wave";
             // 
             // Form1
             // 
@@ -80,8 +68,6 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
-            this.Canvas.ResumeLayout(false);
-            this.Canvas.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -90,7 +76,6 @@
 
         private System.Windows.Forms.Panel Canvas;
         private System.Windows.Forms.Timer updateTmr;
-        private System.Windows.Forms.Label waveLbl;
     }
 }
 
