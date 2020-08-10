@@ -29,8 +29,6 @@ namespace TopDownDefense
         Point BottomLeftCorner;
         Point BottomRightCorner;
 
-        int MaxEnemies = 15;
-
         public List<Enemy> enemies = new List<Enemy>();
 
         public List<AmmoPack> ammopacks = new List<AmmoPack>();
@@ -66,13 +64,11 @@ namespace TopDownDefense
         {
             g = e.Graphics;
 
-            //g.DrawImage(Properties.Resources.backdrop, new Rectangle(0,0,1160,640));
-
             checkCollisions(g);
 
             objective.DrawObjective(g);
 
-            foreach(AmmoPack a in ammopacks)
+            foreach (AmmoPack a in ammopacks)
             {
                 a.drawAmmoPack(g);
             }
@@ -82,12 +78,19 @@ namespace TopDownDefense
                 h.drawHealthPack(g);
             }
 
+            wavemanager.drawProgressionBar(g, Canvas.Size);
+
             player.DrawPlayer(g, mouse, playerFire);
             foreach (Projectile p in player.projectiles)
             {
                 p.drawProjectile(g);
                 p.moveProjectile(g);
             }
+            //Parallel.ForEach(player.projectiles, (p) =>
+            //{
+            //    p.drawProjectile(g);
+            //    p.moveProjectile(g);
+            //});
 
             EnemySpawnManagement();
 
@@ -97,7 +100,13 @@ namespace TopDownDefense
                 enemy.DrawEnemy(g);
             }
 
-            if(CheckGameOver())
+            //Parallel.ForEach(enemies, (enemy) =>
+            //{
+            //    enemy.moveEnemy(g, objective.objectiveRec, player.playerRec);
+            //    enemy.DrawEnemy(g);
+            //});
+
+            if (CheckGameOver())
             {
                 updateTmr.Enabled = false;
                 Console.WriteLine("GAME OVER");
@@ -186,6 +195,7 @@ namespace TopDownDefense
         {
             for (int i = 0; i < player.projectiles.Count(); i++) // Seeing if any bullets have hit any drones
             {
+
                 for (int x = 0; x < enemies.Count(); x++)
                 {
                     if(enemies[x].enemyRec.IntersectsWith(player.projectiles[i].projectileRec))
