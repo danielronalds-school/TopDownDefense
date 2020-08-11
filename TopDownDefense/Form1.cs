@@ -190,7 +190,7 @@ namespace TopDownDefense
                     EnemyObjective = "any";
                 }
 
-                int RandomSpawnSelection = random.Next(1, 4);
+                int RandomSpawnSelection = random.Next(1, 5);
                 int x = 0;
                 int y = 0;
 
@@ -216,6 +216,8 @@ namespace TopDownDefense
                         x = TopLeftCorner.X;
                         break;
                 }
+
+                Console.WriteLine("Spawn Area: " + RandomSpawnSelection);
 
                 EnemySpawnPoint = new Point(x, y);
 
