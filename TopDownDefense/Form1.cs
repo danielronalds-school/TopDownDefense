@@ -44,6 +44,8 @@ namespace TopDownDefense
         public List<AmmoPack> ammopacks = new List<AmmoPack>();
         public List<HealthPack> healthpacks = new List<HealthPack>();
 
+        public Rectangle boundingBox;
+
         Player player = new Player(300,300,1,0);
 
         bool playerLeft, playerRight, playerUp, playerDown, playerFire;
@@ -56,6 +58,7 @@ namespace TopDownDefense
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, Canvas, new object[] { true });
 
             ConfigureSpawnPoints();
+            configureBoundingBox();
             objective = new Objective(Canvas.Size);
 
             addFont();
@@ -84,6 +87,30 @@ namespace TopDownDefense
             BottomRightCorner = new Point(Canvas.Width + 50, Canvas.Height + 50 );
         }
 
+        private void configureBoundingBox()
+        {
+            int x;
+            int y;
+            int width;
+            int height;
+
+            int overhead = 0;
+
+            Point boundingBoxPoint;
+            Size boundingBoxSize;
+
+            x = overhead;
+            y = overhead;
+
+            boundingBoxPoint = new Point(x, y);
+
+            width = Canvas.Width + overhead;
+            height = Canvas.Height + overhead;
+
+            boundingBoxSize = new Size(width, height);
+
+            boundingBox = new Rectangle(boundingBoxPoint, boundingBoxSize);
+        }
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
         {
@@ -227,10 +254,10 @@ namespace TopDownDefense
 
         private void checkCollisions(Graphics g)
         {
-            for (int i = 0; i < player.projectiles.Count(); i++) // Seeing if any bullets have hit any drones
+            for (int i = 0; i < player.projectiles.Count(); i++) 
             {
 
-                for (int x = 0; x < enemies.Count(); x++)
+                for (int x = 0; x < enemies.Count(); x++) // Seeing if any bullets have hit any drones
                 {
                     if(enemies[x].enemyRec.IntersectsWith(player.projectiles[i].projectileRec))
                     {
@@ -258,6 +285,15 @@ namespace TopDownDefense
                         }
                         break;
                     }
+                }
+
+                // Deleting Projectiles that are offscreen
+                bool bulletOnScreen = player.projectiles[i].projectileRec.IntersectsWith(boundingBox);
+
+                if (!bulletOnScreen)
+                {
+                    player.projectiles.Remove(player.projectiles[i]);
+                    Console.WriteLine("Bullet Deleted");
                 }
             }
 
