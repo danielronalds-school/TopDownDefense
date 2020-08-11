@@ -59,7 +59,6 @@ namespace TopDownDefense
             objective = new Objective(Canvas.Size);
 
             addFont();
-            //updateFonts();
 
             wavemanager.nextWave();
         }
@@ -75,13 +74,6 @@ namespace TopDownDefense
             System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
 
             myFont = new Font(fonts.Families[0], 16.0F);
-        }
-
-        private void updateFonts()
-        {
-            //waveLbl.Font = myFont;
-            //waveLbl.Top = 0;
-            //waveLbl.Left = 0 + (Canvas.Width / 2 - waveLbl.Width/ 2);
         }
 
         private void ConfigureSpawnPoints()
@@ -112,6 +104,8 @@ namespace TopDownDefense
                     wavemanager.Recharging = true;
                     wavemanager.waveDelay++;
                     enemies.Clear();
+                    player.Health = player.MaxHealth;
+                    player.Ammo = player.MaxAmmo;
                 }
             }
 

@@ -10,7 +10,7 @@ namespace TopDownDefense
     class WaveManager
     {
         public int waveDelay;
-        public int maxWaveDelay = 500;
+        public int maxWaveDelay = 333;
         public bool Recharging = false;
 
         public int Wave = 1;
@@ -46,12 +46,12 @@ namespace TopDownDefense
             Console.WriteLine("Enemies left in wave: " + enemiesInWave);
             Console.WriteLine("Percentage of enemies left: " + percentage);
 
-            Brush waveBarBrush = new SolidBrush(Color.Blue);
+            Brush waveBarBrush = new SolidBrush(Color.LawnGreen);
             Brush backgroundBrush = new SolidBrush(Color.LightGray);
 
             if(Recharging)
             {
-                rectWidth = barWidth - (waveDelay * 2);
+                rectWidth = barWidth - (waveDelay * 3);
             }
 
             Size rectSize = new Size(rectWidth, rectHeight);
@@ -78,14 +78,14 @@ namespace TopDownDefense
             SolidBrush brush = new SolidBrush(Color.White);
             Rectangle Bounds;
             string text;
+            int x;
 
             text = "Wave " + Wave;
-            var textSize = g.MeasureString(text, font);
-            Size textRectSize = textSize.ToSize();
+            Size textRectSize = g.MeasureString(text, font).ToSize();
 
             textRectSize.Width += 5; // Without this some of the text is cut off
 
-            int x = 0 + (canvas.Width / 2 - textRectSize.Width / 2);
+            x = 0 + (canvas.Width / 2 - textRectSize.Width / 2);
             Point point = new Point(x, 0);
 
             Bounds = new Rectangle(point, textRectSize);
