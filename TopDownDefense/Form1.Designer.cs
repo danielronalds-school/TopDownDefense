@@ -59,7 +59,9 @@
             this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.Canvas);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1200, 700);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1200, 700);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Top Down";

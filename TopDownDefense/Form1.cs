@@ -254,14 +254,18 @@ namespace TopDownDefense
 
         private void checkCollisions(Graphics g)
         {
-            for (int i = 0; i < player.projectiles.Count(); i++) 
+            for (int i = 0; i < player.projectiles.Count(); i++)
             {
+
+                bool ProjectileDeleted = false;
 
                 for (int x = 0; x < enemies.Count(); x++) // Seeing if any bullets have hit any drones
                 {
                     if(enemies[x].enemyRec.IntersectsWith(player.projectiles[i].projectileRec))
                     {
                         player.projectiles.Remove(player.projectiles[i]);
+
+                        ProjectileDeleted = true;
 
                         enemies[x].health -= player.bulletDamage;
                         enemies[x].enemyHit = true;
@@ -287,13 +291,17 @@ namespace TopDownDefense
                     }
                 }
 
-                // Deleting Projectiles that are offscreen
-                bool bulletOnScreen = player.projectiles[i].projectileRec.IntersectsWith(boundingBox);
 
-                if (!bulletOnScreen)
+                // Deleting Projectiles that are offscreen
+                if(!ProjectileDeleted)
                 {
-                    player.projectiles.Remove(player.projectiles[i]);
-                    Console.WriteLine("Bullet Deleted");
+                    bool bulletOnScreen = player.projectiles[i].projectileRec.IntersectsWith(boundingBox);
+
+                    if (!bulletOnScreen)
+                    {
+                        player.projectiles.Remove(player.projectiles[i]);
+                        Console.WriteLine("Bullet Deleted");
+                    }
                 }
             }
 
