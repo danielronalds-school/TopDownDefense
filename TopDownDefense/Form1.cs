@@ -104,8 +104,6 @@ namespace TopDownDefense
                     wavemanager.Recharging = true;
                     wavemanager.waveDelay++;
                     enemies.Clear();
-                    player.Health = player.MaxHealth;
-                    player.Ammo = player.MaxAmmo;
                 }
             }
 
@@ -193,29 +191,33 @@ namespace TopDownDefense
                 }
 
                 int RandomSpawnSelection = random.Next(1, 4);
+                int x = 0;
+                int y = 0;
 
                 switch (RandomSpawnSelection)
                 {
                     case 1:
-                        EnemySpawnPoint = TopLeftCorner;
+                        x = random.Next(TopLeftCorner.X, TopRightCorner.X);
+                        y = TopLeftCorner.Y;
                         break;
 
                     case 2:
-                        EnemySpawnPoint = TopRightCorner;
+                        y = random.Next(TopRightCorner.Y, BottomRightCorner.Y);
+                        x = TopRightCorner.X;
                         break;
 
                     case 3:
-                        EnemySpawnPoint = BottomLeftCorner;
+                        x = random.Next(BottomLeftCorner.X, BottomRightCorner.X);
+                        y = BottomRightCorner.Y;
                         break;
 
                     case 4:
-                        EnemySpawnPoint = BottomRightCorner;
-                        break;
-                    default:
-                        EnemySpawnPoint = TopLeftCorner;
+                        y = random.Next(TopLeftCorner.Y, BottomLeftCorner.Y);
+                        x = TopLeftCorner.X;
                         break;
                 }
 
+                EnemySpawnPoint = new Point(x, y);
 
                 enemies.Add(new Enemy(EnemySpawnPoint, EnemyObjective));
             }

@@ -13,7 +13,7 @@ namespace TopDownDefense
         public int maxWaveDelay = 333;
         public bool Recharging = false;
 
-        public int Wave = 1;
+        public int Wave = 4;
         public int onScreenEnemies;
         public int enemiesInWave;
         private int currentEnemiesInWave;
