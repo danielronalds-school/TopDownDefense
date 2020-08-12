@@ -26,6 +26,8 @@ namespace TopDownDefense
 
         Objective objective;
 
+        destructionWave destructionwave;
+
         Random random = new Random();
 
         Angles angle = new Angles();
@@ -60,6 +62,7 @@ namespace TopDownDefense
             ConfigureSpawnPoints();
             configureBoundingBox();
             objective = new Objective(Canvas.Size);
+            destructionwave = new destructionWave(objective.objectiveCentre());
 
             addFont();
 
@@ -125,14 +128,18 @@ namespace TopDownDefense
                     Console.WriteLine("Wave over!");
                     wavemanager.Wave++;
                     wavemanager.nextWave();
+                    destructionwave.resetWave(objective.objectiveCentre());
                 }
                 else
                 {
                     wavemanager.Recharging = true;
                     wavemanager.waveDelay++;
                     enemies.Clear();
+                    destructionwave.waveActive = true;
                 }
             }
+
+            destructionwave.drawWave(g);
 
             //waveLbl.Text = "Wave: " + wavemanager.Wave;
             wavemanager.drawText(g, myFont, Canvas.Size);

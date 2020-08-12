@@ -59,7 +59,7 @@ namespace TopDownDefense
             height = 80 * scale;
             playerRec = new Rectangle(x, y, width, height);
 
-            Ammo = Ammo;
+            Ammo = MaxAmmo;
             Health = MaxHealth;
 
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));

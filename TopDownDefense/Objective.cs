@@ -37,6 +37,7 @@ namespace TopDownDefense
         {
             g.DrawImage(objectiveImage, objectiveRec);
             drawHealthBar(g);
+            g.DrawEllipse(Pens.Blue, new Rectangle(objectiveCentre(), new Size(5, 5)));
         }
 
         public Point objectiveCentre()
