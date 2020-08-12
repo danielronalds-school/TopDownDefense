@@ -10,7 +10,7 @@ namespace TopDownDefense
     class destructionWave
     {
         Point center;
-        Rectangle waveRec;
+        public Rectangle waveRec;
         Size waveSize;
         int width, height;
 
@@ -18,20 +18,27 @@ namespace TopDownDefense
 
         public bool waveActive = false;
 
-        public destructionWave(Point objectiveCentre)
+        public destructionWave(Rectangle objective)
         {
-            resetWave(objectiveCentre);
+            resetWave(objective);
         }
 
-        public void resetWave(Point objectiveCentre)
+        public void resetWave(Rectangle objective)
         {
-            width = 10;
-            height = 10;
+            width = Speed;
+            height = Speed;
 
             waveSize = new Size(width, height);
 
-            waveRec = new Rectangle(objectiveCentre, waveSize);
+            int x;
+            int y;
 
+            x = objective.X + ((objective.Width / 2) - (width / 2));
+            y = objective.Y + ((objective.Height / 2) - (height / 2));
+
+            center = new Point(x,y);
+
+            waveRec = new Rectangle(center, waveSize);
             waveActive = false;
         }
 
@@ -55,8 +62,8 @@ namespace TopDownDefense
             int new_width;
             int new_height;
 
-            new_x = waveRec.X - Speed;
-            new_y = waveRec.Y - Speed;
+            new_x = waveRec.X - (Speed/2);
+            new_y = waveRec.Y - (Speed/2);
             new_width = waveRec.Width + Speed;
             new_height = waveRec.Height + Speed;
 

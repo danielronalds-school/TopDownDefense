@@ -62,7 +62,7 @@ namespace TopDownDefense
             ConfigureSpawnPoints();
             configureBoundingBox();
             objective = new Objective(Canvas.Size);
-            destructionwave = new destructionWave(objective.objectiveCentre());
+            destructionwave = new destructionWave(objective.objectiveRec);
 
             addFont();
 
@@ -102,8 +102,8 @@ namespace TopDownDefense
             Point boundingBoxPoint;
             Size boundingBoxSize;
 
-            x = overhead;
-            y = overhead;
+            x = 0 - overhead;
+            y = 0 - overhead;
 
             boundingBoxPoint = new Point(x, y);
 
@@ -128,13 +128,13 @@ namespace TopDownDefense
                     Console.WriteLine("Wave over!");
                     wavemanager.Wave++;
                     wavemanager.nextWave();
-                    destructionwave.resetWave(objective.objectiveCentre());
+                    destructionwave.resetWave(objective.objectiveRec);
                 }
                 else
                 {
                     wavemanager.Recharging = true;
                     wavemanager.waveDelay++;
-                    enemies.Clear();
+                    //enemies.Clear();
                     destructionwave.waveActive = true;
                 }
             }
@@ -259,6 +259,30 @@ namespace TopDownDefense
             }
         }
 
+        private void EnemyDestroyed(int enemyValue)
+        {
+            if (enemies[enemyValue].health <= 0)
+            {
+                int dropChance = random.Next(1, 100);
+
+                if (dropChance <= 35)
+                {
+                    ammopacks.Add(new AmmoPack(g, enemies[enemyValue].enemyRec.Location, random.Next(1, 3)));
+                }
+                else if (dropChance > 90)
+                {
+                    healthpacks.Add(new HealthPack(enemies[enemyValue].enemyRec.Location));
+                }
+
+                enemies.Remove(enemies[enemyValue]);
+
+                if (wavemanager.enemiesInWave > 0)
+                {
+                    wavemanager.enemiesInWave--;
+                }
+            }
+        }
+
         private void checkCollisions(Graphics g)
         {
             for (int i = 0; i < player.projectiles.Count(); i++)
@@ -278,22 +302,8 @@ namespace TopDownDefense
                         enemies[x].enemyHit = true;
                         Console.WriteLine("HIT!!!");
 
-                        if (enemies[x].health <= 0)
-                        {
-                            int dropChance = random.Next(1, 100);
+                        EnemyDestroyed(x);
 
-                            if(dropChance <= 35)
-                            {
-                                ammopacks.Add(new AmmoPack(g, enemies[x].enemyRec.Location, random.Next(1, 3)));
-                            }
-                            else if(dropChance > 90)
-                            {
-                                healthpacks.Add(new HealthPack(enemies[x].enemyRec.Location));
-                            }
-
-                            enemies.Remove(enemies[x]);
-                            wavemanager.enemiesInWave--;
-                        }
                         break;
                     }
                 }
@@ -348,6 +358,12 @@ namespace TopDownDefense
                 else if(enemies[x].enemyRec.IntersectsWith(player.playerRec)) // Is the drone touching the player?? if so damage the player
                 {
                     player.Health -= enemies[x].Damage;
+                }
+
+                if(enemies[x].enemyRec.IntersectsWith(destructionwave.waveRec) && destructionwave.waveActive)
+                {
+                    enemies[x].health = 0; // Kills any enemies left after a wave
+                    EnemyDestroyed(x);
                 }
             }
         }
