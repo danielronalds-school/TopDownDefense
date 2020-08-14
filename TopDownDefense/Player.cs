@@ -143,14 +143,12 @@ namespace TopDownDefense
 
             int x, y;
 
-            if(Ammo < MaxAmmo/5 || Health < MaxHealth/5)
+            if(Health < MaxHealth/5)
             {
                 brush = new SolidBrush(Color.Red);
             }
-             
-            //font = new Font(font.Name, 24, FontStyle.Bold);
 
-            display_text = "" + Health + "  " + Ammo;
+            display_text = "" + Health;
 
             Size textRectSize = g.MeasureString(display_text, font).ToSize();
 
@@ -160,6 +158,28 @@ namespace TopDownDefense
             y = canvas.Height - (textRectSize.Height + 50);
 
             display_location = new Point(x,y);
+
+            Bounds = new Rectangle(display_location, textRectSize);
+
+            g.DrawString(display_text, font, brush, Bounds);
+
+            display_text = "" + Ammo;
+
+            brush = new SolidBrush(Color.White);
+
+            if (Ammo < MaxAmmo / 5)
+            {
+                brush = new SolidBrush(Color.Red);
+            }
+
+            textRectSize = g.MeasureString(display_text, font).ToSize();
+
+            textRectSize.Width += 1;
+
+            x = Bounds.Width + 10;
+            y = canvas.Height - (textRectSize.Height + 50);
+
+            display_location = new Point(x, y);
 
             Bounds = new Rectangle(display_location, textRectSize);
 
