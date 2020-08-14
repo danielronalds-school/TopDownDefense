@@ -17,6 +17,8 @@ namespace TopDownDefense
         private int barWidth = 100;
         private int barHeight = 5;
 
+        private bool statusBars = false;
+
         private int x, y, width, height;
 
         private Image playerImage;
@@ -65,7 +67,7 @@ namespace TopDownDefense
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));
         }
 
-        public void DrawPlayer(Graphics g, Point Mouse, bool playerFire)
+        public void DrawPlayer(Graphics g, Point Mouse, bool playerFire, Size Canvas, Font displayFont)
         {
 
             int rotationAngle;
@@ -73,10 +75,17 @@ namespace TopDownDefense
             playerRec.Location = new Point(x, y);
             barrelRec.Location = rifleBarrel();
 
-            // Ammo and Health Bars
-            drawAmmoBar(g);
-            drawHealthBar(g);
-            drawRecoilBar(g);
+            // Ammo and Health Display
+            if(statusBars)
+            {
+                drawAmmoBar(g);
+                drawHealthBar(g);
+                drawRecoilBar(g);
+            }
+            else
+            {
+                drawHealthAndAmmoCounter(g, Canvas, displayFont);
+            }
 
             matrix = new Matrix();
 
@@ -123,6 +132,38 @@ namespace TopDownDefense
             {
                 fireDelay++;
             }
+        }
+
+        private void drawHealthAndAmmoCounter(Graphics g, Size canvas, Font font)
+        {
+            SolidBrush brush = new SolidBrush(Color.White);
+            Rectangle Bounds;
+            string display_text;
+            Point display_location;
+
+            int x, y;
+
+            if(Ammo < MaxAmmo/5 || Health < MaxHealth/5)
+            {
+                brush = new SolidBrush(Color.Red);
+            }
+             
+            //font = new Font(font.Name, 24, FontStyle.Bold);
+
+            display_text = "" + Health + "  " + Ammo;
+
+            Size textRectSize = g.MeasureString(display_text, font).ToSize();
+
+            textRectSize.Width += 1;
+
+            x = 10;
+            y = canvas.Height - (textRectSize.Height + 50);
+
+            display_location = new Point(x,y);
+
+            Bounds = new Rectangle(display_location, textRectSize);
+
+            g.DrawString(display_text, font, brush, Bounds);
         }
 
         private void drawHealthBar(Graphics g)

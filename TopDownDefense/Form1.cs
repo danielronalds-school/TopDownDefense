@@ -21,6 +21,7 @@ namespace TopDownDefense
         private PrivateFontCollection fonts = new PrivateFontCollection();
 
         Font myFont;
+        Font myFontBig;
 
         Graphics g;
 
@@ -80,6 +81,7 @@ namespace TopDownDefense
             System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
 
             myFont = new Font(fonts.Families[0], 16.0F);
+            myFontBig = new Font(fonts.Families[0], 22.0F);
         }
 
         private void ConfigureSpawnPoints()
@@ -158,7 +160,7 @@ namespace TopDownDefense
 
             wavemanager.drawProgressionBar(g, Canvas.Size);
 
-            player.DrawPlayer(g, mouse, playerFire);
+            player.DrawPlayer(g, mouse, playerFire, Canvas.Size, myFontBig);
             foreach (Projectile p in player.projectiles)
             {
                 p.drawProjectile(g);
