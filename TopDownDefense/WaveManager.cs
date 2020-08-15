@@ -125,7 +125,7 @@ namespace TopDownDefense
         {
             double result;
 
-            result = (5 * wave) + 10;
+            result = (4 * wave) + 10;
 
             return (int)result;
         }

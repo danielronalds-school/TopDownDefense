@@ -43,7 +43,7 @@ namespace TopDownDefense
 
         public int Ammo;
 
-        public int MaxAmmo = 50;
+        public int MaxAmmo = 75;
 
         public int Health;
         public int MaxHealth = 200;
@@ -133,8 +133,8 @@ namespace TopDownDefense
                 fireDelay++;
             }
 
-            g.DrawRectangle(Pens.LawnGreen, playerRec);
-            g.DrawRectangle(Pens.Red, hitBox());
+            //g.DrawRectangle(Pens.LawnGreen, playerRec);
+            //g.DrawRectangle(Pens.Red, hitBox());
         }
 
         public Rectangle hitBox()
