@@ -132,6 +132,22 @@ namespace TopDownDefense
             {
                 fireDelay++;
             }
+
+            g.DrawRectangle(Pens.LawnGreen, playerRec);
+            g.DrawRectangle(Pens.Red, hitBox());
+        }
+
+        public Rectangle hitBox()
+        {
+            Rectangle hitbox;
+
+            int hitboxRectSize = playerRec.Width/2;
+
+            Size hitboxSize = new Size(hitboxRectSize, hitboxRectSize);
+
+            hitbox = new Rectangle(playerRec.Location, hitboxSize);
+
+            return hitbox;
         }
 
         private void drawHealthAndAmmoCounter(Graphics g, Size canvas, Font font)

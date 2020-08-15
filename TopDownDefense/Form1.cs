@@ -174,7 +174,7 @@ namespace TopDownDefense
 
             foreach (Enemy enemy in enemies)
             {
-                enemy.moveEnemy(g, objective.objectiveRec, player.playerRec);
+                enemy.moveEnemy(g, objective.objectiveRec, player.hitBox());
                 enemy.DrawEnemy(g);
             }
 
@@ -340,7 +340,7 @@ namespace TopDownDefense
             for (int i = 0; i < healthpacks.Count(); i++) // Health pack collisions check
             {
                 // Is the Player touching a health pack, and do they need it?
-                if(player.playerRec.IntersectsWith(healthpacks[i].healthRec) && player.Health < player.MaxHealth)
+                if(player.hitBox().IntersectsWith(healthpacks[i].healthRec) && player.Health < player.MaxHealth)
                 {
                     player.Health += healthpacks[i].containedHealth; // Adding the health packs health to the players health 
                     if(player.Health > player.MaxHealth) // Is the player overhealed?? If so make their health the max.
@@ -357,7 +357,7 @@ namespace TopDownDefense
                 {
                     objective.objectiveHealth -= enemies[x].Damage * 15;
                 }
-                else if(enemies[x].enemyRec.IntersectsWith(player.playerRec)) // Is the drone touching the player?? if so damage the player
+                else if(enemies[x].enemyRec.IntersectsWith(player.hitBox())) // Is the drone touching the player?? if so damage the player
                 {
                     player.Health -= enemies[x].Damage;
                 }
