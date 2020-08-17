@@ -39,7 +39,7 @@
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Canvas.Location = new System.Drawing.Point(0, 0);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(1200, 700);
+            this.Canvas.Size = new System.Drawing.Size(1188, 666);
             this.Canvas.TabIndex = 0;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
             this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);

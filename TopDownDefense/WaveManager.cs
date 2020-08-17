@@ -91,7 +91,6 @@ namespace TopDownDefense
             Bounds = new Rectangle(point, textRectSize);
 
             g.DrawString(text, font, brush, Bounds);
-            //g.DrawRectangle(Pens.Red, point.X, point.Y, Bounds.Width, Bounds.Height);
         }
 
         public bool waveOver()

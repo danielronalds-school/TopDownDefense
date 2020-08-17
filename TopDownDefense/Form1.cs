@@ -22,6 +22,7 @@ namespace TopDownDefense
 
         Font myFont;
         Font myFontBig;
+        Font gameOverFont;
 
         Graphics g;
 
@@ -86,6 +87,7 @@ namespace TopDownDefense
 
             myFont = new Font(fonts.Families[0], 16.0F);
             myFontBig = new Font(fonts.Families[0], 22.0F);
+            gameOverFont = new Font(fonts.Families[0], 36.0F);
         }
 
         private void ConfigureSpawnPoints()
@@ -191,7 +193,7 @@ namespace TopDownDefense
             else
             {
                 // Drawing the freeze frame
-                if (screen.currentOpacity < 255) // Saves a bit of computing power
+                if (false)//screen.currentOpacity < 255) // Saves a bit of computing power
                 {
                     objective.DrawObjective(g);
 
@@ -220,7 +222,7 @@ namespace TopDownDefense
                     }
                 }
 
-                screen.paintGameOver(g, Canvas.Size);
+                screen.paintGameOver(g, Canvas.Size, gameOverFont);
             }
         }
 
