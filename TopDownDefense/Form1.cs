@@ -33,6 +33,8 @@ namespace TopDownDefense
 
         Angles angle = new Angles();
 
+        Screens screen = new Screens();
+
         WaveManager wavemanager = new WaveManager();
 
         // Spawn Points
@@ -46,6 +48,8 @@ namespace TopDownDefense
 
         public List<AmmoPack> ammopacks = new List<AmmoPack>();
         public List<HealthPack> healthpacks = new List<HealthPack>();
+
+        public bool GameOver;
 
         public Rectangle boundingBox;
 
@@ -121,69 +125,103 @@ namespace TopDownDefense
         {
             g = e.Graphics;
 
-            checkCollisions(g);
-
-            if (wavemanager.waveOver())
+            if(!GameOver)
             {
-                if (wavemanager.waveDelay == wavemanager.maxWaveDelay)
+                checkCollisions(g);
+
+                if (wavemanager.waveOver())
                 {
-                    Console.WriteLine("Wave over!");
-                    wavemanager.Wave++;
-                    wavemanager.nextWave();
-                    destructionwave.resetWave(objective.objectiveRec);
+                    if (wavemanager.waveDelay == wavemanager.maxWaveDelay)
+                    {
+                        Console.WriteLine("Wave over!");
+                        wavemanager.Wave++;
+                        wavemanager.nextWave();
+                        destructionwave.resetWave(objective.objectiveRec);
+                    }
+                    else
+                    {
+                        wavemanager.Recharging = true;
+                        wavemanager.waveDelay++;
+                        destructionwave.waveActive = true;
+                    }
                 }
-                else
+
+                destructionwave.drawWave(g);
+
+                wavemanager.drawText(g, myFont, Canvas.Size);
+
+                objective.DrawObjective(g);
+
+                foreach (AmmoPack a in ammopacks)
                 {
-                    wavemanager.Recharging = true;
-                    wavemanager.waveDelay++;
-                    //enemies.Clear();
-                    destructionwave.waveActive = true;
+                    a.drawAmmoPack(g);
                 }
-            }
 
-            destructionwave.drawWave(g);
+                foreach (HealthPack h in healthpacks)
+                {
+                    h.drawHealthPack(g);
+                }
 
-            //waveLbl.Text = "Wave: " + wavemanager.Wave;
-            wavemanager.drawText(g, myFont, Canvas.Size);
+                wavemanager.drawProgressionBar(g, Canvas.Size);
 
-            objective.DrawObjective(g);
+                player.DrawPlayer(g, mouse, playerFire, Canvas.Size, myFontBig);
+                foreach (Projectile p in player.projectiles)
+                {
+                    p.drawProjectile(g);
+                    p.moveProjectile(g);
+                }
 
-            foreach (AmmoPack a in ammopacks)
+                if (EnemySpawns)
+                {
+                    EnemySpawnManagement();
+                }
+
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.moveEnemy(g, objective.objectiveRec, player.hitBox());
+                    enemy.DrawEnemy(g);
+                }
+
+                if (CheckGameOver())
+                {
+                    GameOver = true;
+                    Console.WriteLine("GAME OVER");
+                }
+            } 
+            else
             {
-                a.drawAmmoPack(g);
+                // Drawing the freeze frame
+                if (screen.currentOpacity < 255) // Saves a bit of computing power
+                {
+                    objective.DrawObjective(g);
+
+                    foreach (AmmoPack a in ammopacks)
+                    {
+                        a.drawAmmoPack(g);
+                    }
+
+                    foreach (HealthPack h in healthpacks)
+                    {
+                        h.drawHealthPack(g);
+                    }
+
+                    wavemanager.drawProgressionBar(g, Canvas.Size);
+
+                    player.DrawPlayer(g, mouse, playerFire, Canvas.Size, myFontBig);
+                    foreach (Projectile p in player.projectiles)
+                    {
+                        p.drawProjectile(g);
+                        p.moveProjectile(g);
+                    }
+
+                    foreach (Enemy enemy in enemies)
+                    {
+                        enemy.DrawEnemy(g);
+                    }
+                }
+
+                screen.paintGameOver(g, Canvas.Size);
             }
-
-            foreach (HealthPack h in healthpacks)
-            {
-                h.drawHealthPack(g);
-            }
-
-            wavemanager.drawProgressionBar(g, Canvas.Size);
-
-            player.DrawPlayer(g, mouse, playerFire, Canvas.Size, myFontBig);
-            foreach (Projectile p in player.projectiles)
-            {
-                p.drawProjectile(g);
-                p.moveProjectile(g);
-            }
-
-            if (EnemySpawns)
-            { 
-                EnemySpawnManagement();
-            }
-
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.moveEnemy(g, objective.objectiveRec, player.hitBox());
-                enemy.DrawEnemy(g);
-            }
-
-            if (CheckGameOver())
-            {
-                updateTmr.Enabled = false;
-                Console.WriteLine("GAME OVER");
-            }
-
         }
 
         private void updateTmr_Tick(object sender, EventArgs e)
