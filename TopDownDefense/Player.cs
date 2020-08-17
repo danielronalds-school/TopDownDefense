@@ -171,7 +171,7 @@ namespace TopDownDefense
             textRectSize.Width += 1;
 
             x = 10;
-            y = canvas.Height - (textRectSize.Height + 50);
+            y = canvas.Height - (textRectSize.Height + 10);
 
             display_location = new Point(x,y);
 
@@ -193,7 +193,7 @@ namespace TopDownDefense
             textRectSize.Width += 1;
 
             x = Bounds.Width + 10;
-            y = canvas.Height - (textRectSize.Height + 50);
+            y = canvas.Height - (textRectSize.Height + 10);
 
             display_location = new Point(x, y);
 

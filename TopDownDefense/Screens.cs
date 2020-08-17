@@ -13,7 +13,7 @@ namespace TopDownDefense
         public int currentOpacity = 1;
         int currentTextOpacity = 1;
 
-        int fadeSpeed = 4;
+        int fadeSpeed = 3;
 
         public void paintGameOver(Graphics g, Size Canvas, Font font)
         {
