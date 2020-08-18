@@ -54,7 +54,9 @@ namespace TopDownDefense
 
         public Rectangle boundingBox;
 
-        Player player = new Player(300,300,1,0);
+        Point PlayerStartLocation = new Point(300, 300);
+
+        Player player;
 
         bool playerLeft, playerRight, playerUp, playerDown, playerFire;
 
@@ -69,6 +71,8 @@ namespace TopDownDefense
             configureBoundingBox();
             objective = new Objective(Canvas.Size);
             destructionwave = new destructionWave(objective.objectiveRec);
+
+            player = new Player(PlayerStartLocation.X, PlayerStartLocation.Y, 1, 0);
 
             addFont();
 
@@ -222,7 +226,7 @@ namespace TopDownDefense
                     }
                 }
 
-                screen.paintGameOver(g, Canvas.Size, gameOverFont);
+                screen.paintGameOver(g, Canvas.Size, gameOverFont, myFont);
             }
         }
 
@@ -241,6 +245,32 @@ namespace TopDownDefense
                 return true;
             }
             return false;
+        }
+
+        private void ResetGame()
+        {
+            // Resetting Player
+            player = new Player(PlayerStartLocation.X, PlayerStartLocation.Y, 1, 0);
+
+            // Reseting Enemies
+            enemies.Clear();
+
+            // Reseting Objective
+            objective = new Objective(Canvas.Size);
+            destructionwave = new destructionWave(objective.objectiveRec);
+
+            // Reseting health and ammo packs
+            ammopacks.Clear();
+            healthpacks.Clear();
+
+            // Reseting Wave Manager
+            wavemanager.Wave = 1;
+            wavemanager.nextWave();
+
+            // Resetting Transition Effects
+            screen.currentOpacity = 1;
+            screen.currentTextOpacity = 1;
+            screen.currentSubTextOpacity = 1;
         }
 
         private void EnemySpawnManagement()
@@ -453,6 +483,13 @@ namespace TopDownDefense
 
                 case Keys.S:
                     playerDown = true;
+                    break;
+                case Keys.Space:
+                    if(screen.currentScreen == "Game Over" && !screen.Transitioning && GameOver)
+                    {
+                        ResetGame();
+                        GameOver = false;
+                    }
                     break;
             }
         }

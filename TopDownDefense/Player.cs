@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Media;
 
 namespace TopDownDefense
 {
@@ -13,6 +14,8 @@ namespace TopDownDefense
         Angles angle = new Angles();
 
         Random random = new Random();
+
+        SoundPlayer shoot_sound;
 
         private int barWidth = 100;
         private int barHeight = 5;
@@ -65,6 +68,8 @@ namespace TopDownDefense
             Health = MaxHealth;
 
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));
+
+            shoot_sound = new SoundPlayer( Properties.Resources.Laser_Shoot);
         }
 
         public void DrawPlayer(Graphics g, Point Mouse, bool playerFire, Size Canvas, Font displayFont)
@@ -126,6 +131,7 @@ namespace TopDownDefense
             {
                 fireDelay = 0;
                 projectiles.Add(new Projectile(playerRec, rotationAngle));
+                shoot_sound.Play();
                 Ammo--;
             }
             else if(fireDelay < maxFireDelay)

@@ -145,5 +145,8 @@
   <ItemGroup>
     <None Include="Resources\backdrop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Laser_Shoot.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

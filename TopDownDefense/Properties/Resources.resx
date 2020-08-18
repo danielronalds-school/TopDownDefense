@@ -157,4 +157,7 @@
   <data name="FFFFORWA" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FFFFORWA.TTF;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Laser_Shoot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Laser_Shoot.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
