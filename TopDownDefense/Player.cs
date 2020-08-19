@@ -131,7 +131,7 @@ namespace TopDownDefense
             {
                 fireDelay = 0;
                 projectiles.Add(new Projectile(playerRec, rotationAngle));
-                shoot_sound.Play();
+                //shoot_sound.Play();
                 Ammo--;
             }
             else if(fireDelay < maxFireDelay)

@@ -37,6 +37,7 @@
             // 
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Canvas.Cursor = System.Windows.Forms.Cursors.Cross;
             this.Canvas.Location = new System.Drawing.Point(0, 0);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(1188, 666);
