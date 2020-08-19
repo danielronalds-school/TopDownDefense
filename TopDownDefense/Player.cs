@@ -69,7 +69,7 @@ namespace TopDownDefense
 
             barrelRec = new Rectangle(rifleBarrel(), new Size(8, 8));
 
-            shoot_sound = new SoundPlayer( Properties.Resources.Laser_Shoot);
+            //shoot_sound = new SoundPlayer( Properties.Resources.Laser_Shoot);
         }
 
         public void DrawPlayer(Graphics g, Point Mouse, bool playerFire, Size Canvas, Font displayFont)
@@ -309,27 +309,56 @@ namespace TopDownDefense
             return rifleBarrel;
         }
 
-        public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown)
+        public void MovePlayer(bool playerLeft, bool playerRight, bool playerUp, bool playerDown, Size Canvas)
         {
             if(playerLeft)
             {
                 x -= PlayerSpeed;
+                if(playerOutOfBounds(x, y, playerRec.Size, Canvas))
+                {
+                    x += PlayerSpeed;
+                }
             }
 
             if (playerRight)
             {
                 x += PlayerSpeed;
+                if (playerOutOfBounds(x, y, playerRec.Size, Canvas))
+                {
+                    x -= PlayerSpeed;
+                }
             }
 
             if (playerUp)
             {
                 y -= PlayerSpeed;
+                if (playerOutOfBounds(x, y, playerRec.Size, Canvas))
+                {
+                    y += PlayerSpeed;
+                }
             }
 
             if (playerDown)
             {
                 y += PlayerSpeed;
+                if (playerOutOfBounds(x, y, playerRec.Size, Canvas))
+                {
+                    y -= PlayerSpeed;
+                }
             }
+        }
+
+        private bool playerOutOfBounds(int player_x, int player_y, Size Player, Size Canvas)
+        {
+            if(player_x < 0 || player_x > (Canvas.Width - Player.Width) + 50) // Checking Left and Right Bounds
+            {
+                return true;
+            }
+            else if(player_y < 0 || player_y > (Canvas.Height - Player.Height)) // Checking Top and Bottom Bounds
+            {
+                return true;
+            }
+            return false;
         }
 
     }

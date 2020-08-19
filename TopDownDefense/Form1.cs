@@ -232,7 +232,7 @@ namespace TopDownDefense
 
         private void updateTmr_Tick(object sender, EventArgs e)
         {
-            player.MovePlayer(playerLeft, playerRight, playerUp, playerDown);
+            player.MovePlayer(playerLeft, playerRight, playerUp, playerDown, Canvas.Size);
             Console.WriteLine("Mouse X = " + mouse.X + " Mouse Y = " + mouse.Y + " Angle = " + angle.CalculateAngle(player.rifleBarrel(), mouse));
             Console.WriteLine(player.bulletSpray);
             Canvas.Invalidate();

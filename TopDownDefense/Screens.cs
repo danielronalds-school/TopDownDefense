@@ -19,6 +19,8 @@ namespace TopDownDefense
         public string currentScreen = "Game";
         public bool Transitioning;
 
+
+        // Game Over Screen
         public void paintGameOver(Graphics g, Size Canvas, Font font, Font subtextFont)
         {
             Transitioning = true;
