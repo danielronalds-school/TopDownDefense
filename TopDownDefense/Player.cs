@@ -94,7 +94,7 @@ namespace TopDownDefense
 
             matrix = new Matrix();
 
-            rotationAngle = (int)angle.CalculateAngle(rifleBarrel(), Mouse);
+            rotationAngle = (int)angle.CalculateAngle(spriteCentre(), Mouse);
 
             if (playerFire && Ammo > 0 && fireDelay >= maxFireDelay)
             {
