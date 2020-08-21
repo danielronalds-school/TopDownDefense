@@ -35,7 +35,7 @@
             // 
             // Canvas
             // 
-            this.Canvas.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Canvas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(171)))), ((int)(((byte)(77)))));
             this.Canvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Canvas.Cursor = System.Windows.Forms.Cursors.Cross;
             this.Canvas.Location = new System.Drawing.Point(0, 0);

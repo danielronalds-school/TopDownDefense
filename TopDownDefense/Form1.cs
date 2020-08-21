@@ -396,7 +396,7 @@ namespace TopDownDefense
 
             for (int i = 0; i < ammopacks.Count(); i++) // Ammo Pack Collisions Check
             {
-                if(player.playerRec.IntersectsWith(ammopacks[i].ammoRec) && player.Ammo < player.MaxAmmo)
+                if(player.hitBox().IntersectsWith(ammopacks[i].ammoRec) && player.Ammo < player.MaxAmmo)
                 {
                     player.Ammo += ammopacks[i].containedAmmo;
                     if(player.Ammo > player.MaxAmmo)

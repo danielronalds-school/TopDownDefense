@@ -16,7 +16,7 @@ namespace TopDownDefense
         public Rectangle objectiveRec;
 
         int barWidth = 400;
-        int barHeight = 7;
+        int barHeight = 8;
 
         public int objectiveHealth = 40000;
         public int maxObjectiveHealth = 40000;
@@ -58,7 +58,9 @@ namespace TopDownDefense
             int rectHeight = barHeight;
 
             Brush objectiveHealthBarBrush = new SolidBrush(Color.Red);
-            Brush backgroundBrush = new SolidBrush(Color.LightGray);
+            Brush backgroundBrush = new SolidBrush(Color.FromArgb(255, 84, 162, 68));
+            Pen borderPen = new Pen(Color.FromArgb(255, 51, 51), 2.0f);
+            Pen backgroundBorderPen = new Pen(Color.FromArgb(255, 93, 167, 73), 3.0f);
 
             Size rectSize = new Size(rectWidth, rectHeight);
 
@@ -77,7 +79,9 @@ namespace TopDownDefense
 
 
             g.FillRectangle(backgroundBrush, healthBarBacking);
+            g.DrawRectangle(backgroundBorderPen, healthBarBacking);
             g.FillRectangle(objectiveHealthBarBrush, objectiveHealthBarRect);
+            g.DrawRectangle(borderPen, objectiveHealthBarRect);
         }
     }
 }

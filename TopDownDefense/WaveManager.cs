@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
- 
+
 namespace TopDownDefense
 {
     class WaveManager
@@ -46,8 +46,10 @@ namespace TopDownDefense
             Console.WriteLine("Enemies left in wave: " + enemiesInWave);
             Console.WriteLine("Percentage of enemies left: " + percentage);
 
-            Brush waveBarBrush = new SolidBrush(Color.LawnGreen);
-            Brush backgroundBrush = new SolidBrush(Color.LightGray);
+            Brush waveBarBrush = new SolidBrush(Color.White);
+            Pen borderPen = new Pen(Color.GhostWhite, 3.0f);
+            Pen backgroundBorderPen = new Pen(Color.FromArgb(255, 93, 167, 73), 3.0f);
+            Brush backgroundBrush = new SolidBrush(Color.FromArgb(255, 84, 162, 68));//Color.LightGray);
 
             if(Recharging)
             {
@@ -70,7 +72,9 @@ namespace TopDownDefense
             barBacking = new Rectangle(rectPoint.X, rectPoint.Y, barWidth, barHeight);
 
             g.FillRectangle(backgroundBrush, barBacking);
+            g.DrawRectangle(backgroundBorderPen, waveBarRect);
             g.FillRectangle(waveBarBrush, waveBarRect);
+            g.DrawRectangle(borderPen, waveBarRect);
         }
 
         public void drawText(Graphics g, Font font, Size canvas)
